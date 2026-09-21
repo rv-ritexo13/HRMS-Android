@@ -26,13 +26,14 @@ import java.util.Calendar;
 public final class HrmsDatabase extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "hrms.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     public static final String TABLE_PAYSLIPS = "payslips";
     public static final String TABLE_PROFILE = "profile";
     public static final String TABLE_LEAVE_BALANCES = "leave_balances";
     public static final String TABLE_LEAVE_REQUESTS = "leave_requests";
     public static final String TABLE_USERS = "users";
+    public static final String TABLE_EXPENSES = "expenses";
 
     // users columns
     public static final String COL_USER_EMPLOYEE_ID = "employee_id";
@@ -46,6 +47,17 @@ public final class HrmsDatabase extends SQLiteOpenHelper {
     public static final String COL_LB_TYPE = "leave_type";
     public static final String COL_LB_TOTAL = "total_days";
     public static final String COL_LB_USED = "used_days";
+
+    // expenses columns
+    public static final String COL_EXP_ID = "id";
+    public static final String COL_EXP_TITLE = "title";
+    public static final String COL_EXP_CATEGORY = "category";
+    public static final String COL_EXP_AMOUNT = "amount";
+    public static final String COL_EXP_DATE = "expense_date_millis";
+    public static final String COL_EXP_DESCRIPTION = "description";
+    public static final String COL_EXP_STATUS = "status";
+    public static final String COL_EXP_CREATED = "created_millis";
+    public static final String COL_EXP_RECEIPT = "receipt_name";
 
     // leave_requests columns
     public static final String COL_LR_ID = "id";
@@ -193,6 +205,19 @@ public final class HrmsDatabase extends SQLiteOpenHelper {
                 + COL_USER_ROLE + " TEXT NOT NULL"
                 + ")");
         seedUsers(db);
+
+        db.execSQL("CREATE TABLE " + TABLE_EXPENSES + " ("
+                + COL_EXP_ID + " TEXT PRIMARY KEY, "
+                + COL_EXP_TITLE + " TEXT NOT NULL, "
+                + COL_EXP_CATEGORY + " TEXT NOT NULL, "
+                + COL_EXP_AMOUNT + " INTEGER NOT NULL, "
+                + COL_EXP_DATE + " INTEGER NOT NULL, "
+                + COL_EXP_DESCRIPTION + " TEXT NOT NULL, "
+                + COL_EXP_STATUS + " TEXT NOT NULL, "
+                + COL_EXP_CREATED + " INTEGER NOT NULL, "
+                + COL_EXP_RECEIPT + " TEXT"
+                + ")");
+        seedExpenses(db);
     }
 
     @Override
@@ -203,7 +228,43 @@ public final class HrmsDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LEAVE_BALANCES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LEAVE_REQUESTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXPENSES);
         onCreate(db);
+    }
+
+    private void seedExpenses(@NonNull SQLiteDatabase db) {
+        insertExpense(db, "EXP-seed-1", "Client visit cab fare", "TRANSPORTATION",
+                850L, date(2026, 9, 12), "Round trip to client office for the quarterly review.",
+                "PAID", date(2026, 9, 12), "cab_receipt.pdf");
+        insertExpense(db, "EXP-seed-2", "Team lunch", "FOOD",
+                2400L, date(2026, 9, 8), "Sprint closing lunch with the team (6 people).",
+                "APPROVED", date(2026, 9, 8), "lunch_bill.jpg");
+        insertExpense(db, "EXP-seed-3", "Hotel stay - Mumbai offsite", "ACCOMMODATION",
+                7200L, date(2026, 9, 3), "Two nights during the Mumbai product offsite.",
+                "SUBMITTED", date(2026, 9, 4), "hotel_invoice.pdf");
+        insertExpense(db, "EXP-seed-4", "Flight to Mumbai", "TRAVEL",
+                6500L, date(2026, 9, 2), "Return air travel for the offsite.",
+                "REJECTED", date(2026, 9, 2), null);
+        insertExpense(db, "EXP-seed-5", "Standing desk riser", "OFFICE",
+                3200L, date(2026, 9, 18), "Ergonomic desk riser for the home workstation.",
+                "DRAFT", date(2026, 9, 18), null);
+    }
+
+    private void insertExpense(
+            @NonNull SQLiteDatabase db, @NonNull String id, @NonNull String title,
+            @NonNull String category, long amount, long dateMillis, @NonNull String description,
+            @NonNull String status, long createdMillis, @Nullable String receiptName) {
+        ContentValues v = new ContentValues();
+        v.put(COL_EXP_ID, id);
+        v.put(COL_EXP_TITLE, title);
+        v.put(COL_EXP_CATEGORY, category);
+        v.put(COL_EXP_AMOUNT, amount);
+        v.put(COL_EXP_DATE, dateMillis);
+        v.put(COL_EXP_DESCRIPTION, description);
+        v.put(COL_EXP_STATUS, status);
+        v.put(COL_EXP_CREATED, createdMillis);
+        v.put(COL_EXP_RECEIPT, receiptName);
+        db.insert(TABLE_EXPENSES, null, v);
     }
 
     private void seedUsers(@NonNull SQLiteDatabase db) {

@@ -64,6 +64,8 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding>
                 NavHostFragment.findNavController(this).navigate(R.id.action_profile_to_editProfile));
         getBinding().cardDocuments.setOnClickListener(v ->
                 NavHostFragment.findNavController(this).navigate(R.id.action_profile_to_documents));
+        getBinding().cardPerformance.setOnClickListener(v ->
+                NavHostFragment.findNavController(this).navigate(R.id.action_profile_to_performance));
 
         AuthUser user = SessionManager.getSession(requireContext());
         String employeeId = user != null ? user.getEmployeeId() : "EMP001";

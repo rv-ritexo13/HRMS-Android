@@ -169,6 +169,16 @@
     <string name="payslip_cd_back">Back</string>
 
     <!-- Employee Dashboard (Home) -->
+    <string name="dashboard_search_hint">Search leave, salary, documents…</string>
+    <string name="dashboard_cd_clear_search">Clear search</string>
+    <string name="search_sub_home">Dashboard overview</string>
+    <string name="search_sub_attendance">Check in/out, calendar, corrections</string>
+    <string name="search_sub_leave">Apply for leave, balance, holidays</string>
+    <string name="search_sub_salary">Payslips, earnings, tax</string>
+    <string name="search_sub_expenses">Reimbursements and claims</string>
+    <string name="search_sub_performance">Reviews, goals, KRAs</string>
+    <string name="search_sub_documents">Payslips, letters, tax, policies</string>
+    <string name="search_sub_profile">Personal info, settings, logout</string>
     <string name="dashboard_cd_notifications">Notifications</string>
     <string name="dashboard_cd_avatar">Profile photo</string>
     <string name="dashboard_attendance_title">Today\'s Attendance</string>
@@ -335,6 +345,31 @@
     <string name="profile_field_emergency_relationship">Relationship</string>
     <string name="profile_field_emergency_phone">Phone</string>
     <string name="profile_documents_subtitle">View payslips, letters, tax and policy documents</string>
+    <string name="profile_section_performance">Performance Management</string>
+    <string name="profile_performance_subtitle">Reviews, goals and KRAs</string>
+
+    <!-- Performance Management -->
+    <string name="performance_title">Performance Management</string>
+    <string name="performance_cd_back">Back</string>
+    <string name="performance_section_reviews">Performance Reviews</string>
+    <string name="performance_section_goals">Goals &amp; Objectives</string>
+    <string name="performance_section_kras">Key Result Areas (KRA)</string>
+    <string name="performance_error_title">Couldn\'t load performance</string>
+    <string name="performance_error_message">Something went wrong. Pull to refresh or try again.</string>
+    <string name="performance_reviewer_format">Reviewer: %1$s</string>
+    <string name="performance_rating_format">Rating: %1$s</string>
+    <string name="performance_rating_pending">Rating pending</string>
+    <string name="performance_goal_progress_format">%1$d%% complete</string>
+    <string name="performance_goal_due_format">Target date: %1$s</string>
+    <string name="performance_kra_weightage_format">Weightage %1$d%%</string>
+    <string name="performance_kra_target_format">Target: %1$s</string>
+    <string name="performance_kra_achievement_format">Achieved: %1$s</string>
+    <string name="performance_status_completed">Completed</string>
+    <string name="performance_status_in_progress">In Progress</string>
+    <string name="performance_status_upcoming">Upcoming</string>
+    <string name="performance_goal_on_track">On Track</string>
+    <string name="performance_goal_at_risk">At Risk</string>
+    <string name="performance_goal_completed">Completed</string>
 
     <!-- Edit Profile -->
     <string name="edit_profile_title">Edit Profile</string>
@@ -381,6 +416,89 @@
     <string name="viewer_error_title">Couldn\'t open document</string>
     <string name="viewer_error_message">This document couldn\'t be prepared for preview.</string>
     <string name="viewer_open_external">Open</string>
+
+    <!-- Dashboard: Expenses entry -->
+    <string name="dashboard_expenses_title">Expenses</string>
+    <string name="dashboard_expenses_subtitle">Claim and track your expenses</string>
+
+    <!-- Expenses: shared -->
+    <string name="expense_error_title">Couldn\'t load expenses</string>
+    <string name="expense_error_message">Something went wrong. Please try again.</string>
+
+    <string name="expense_category_travel">Travel</string>
+    <string name="expense_category_food">Food</string>
+    <string name="expense_category_accommodation">Accommodation</string>
+    <string name="expense_category_transportation">Transportation</string>
+    <string name="expense_category_office">Office</string>
+    <string name="expense_category_medical">Medical</string>
+    <string name="expense_category_other">Other</string>
+
+    <string name="expense_status_draft">Draft</string>
+    <string name="expense_status_submitted">Submitted</string>
+    <string name="expense_status_approved">Approved</string>
+    <string name="expense_status_rejected">Rejected</string>
+    <string name="expense_status_paid">Paid</string>
+
+    <!-- My Expenses -->
+    <string name="expenses_title">My Expenses</string>
+    <string name="expenses_cd_back">Back</string>
+    <string name="expenses_add">Add Expense</string>
+    <string name="expenses_history_header">Expenses</string>
+    <string name="expenses_empty_message">No expenses yet. Tap Add Expense to create your first one.</string>
+    <string name="expenses_reports_button">Monthly Reports</string>
+
+    <!-- Expense Reports (monthly) -->
+    <string name="expense_reports_title">Expense Reports</string>
+    <string name="expense_reports_cd_back">Back</string>
+    <string name="expense_reports_empty">No expense reports yet. Add expenses and they\'ll be grouped into a report for each month.</string>
+    <string name="expense_reports_error_title">Couldn\'t load reports</string>
+    <string name="expense_reports_error_message">Something went wrong. Please try again.</string>
+    <string name="expense_report_detail_title">Expense Report</string>
+    <string name="expense_report_total_label">Total amount</string>
+    <string name="expense_report_section_items">Expenses in this report</string>
+    <plurals name="expense_report_item_count">
+        <item quantity="one">%1$d expense</item>
+        <item quantity="other">%1$d expenses</item>
+    </plurals>
+
+    <!-- Add / Edit Expense -->
+    <string name="add_expense_title">Add Expense</string>
+    <string name="edit_expense_title">Edit Expense</string>
+    <string name="add_expense_cd_back">Back</string>
+    <string name="add_expense_hint_title">Expense title</string>
+    <string name="add_expense_hint_category">Category</string>
+    <string name="add_expense_hint_amount">Amount</string>
+    <string name="add_expense_amount_prefix">₹</string>
+    <string name="add_expense_hint_date">Expense date</string>
+    <string name="add_expense_hint_description">Description (optional)</string>
+    <string name="add_expense_receipt_label">Receipt / Bill</string>
+    <string name="add_expense_receipt_add">Attach receipt</string>
+    <string name="add_expense_receipt_none">No receipt attached</string>
+    <string name="add_expense_save_draft">Save Draft</string>
+    <string name="add_expense_submit">Submit</string>
+    <string name="add_expense_err_title">Title is required</string>
+    <string name="add_expense_err_category">Category is required</string>
+    <string name="add_expense_err_amount">Amount must be greater than 0</string>
+    <string name="add_expense_err_date">Date is required</string>
+    <string name="add_expense_saved_draft">Expense saved as draft</string>
+    <string name="add_expense_submitted">Expense submitted</string>
+    <string name="add_expense_error">Couldn\'t save your expense. Please try again.</string>
+
+    <!-- Expense Details -->
+    <string name="expense_detail_title">Expense Details</string>
+    <string name="expense_detail_cd_back">Back</string>
+    <string name="expense_detail_id">Expense ID</string>
+    <string name="expense_detail_category">Category</string>
+    <string name="expense_detail_amount">Amount</string>
+    <string name="expense_detail_date">Expense date</string>
+    <string name="expense_detail_description">Description</string>
+    <string name="expense_detail_no_description">No description provided.</string>
+    <string name="expense_detail_receipt">Receipt / Bill</string>
+    <string name="expense_detail_no_receipt">No receipt attached</string>
+    <string name="expense_detail_edit">Edit</string>
+    <string name="expense_detail_submit">Submit</string>
+    <string name="expense_detail_submitted">Expense submitted</string>
+    <string name="expense_detail_submit_error">Couldn\'t submit this expense. Please try again.</string>
 
     <!-- Generic -->
     <string name="loading_default_message">Loading…</string>

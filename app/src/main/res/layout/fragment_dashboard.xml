@@ -104,6 +104,65 @@
             android:paddingHorizontal="@dimen/space_lg"
             tools:text="Saturday, 19 September 2026" />
 
+        <!-- Feature search -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_lg"
+            android:layout_marginBottom="@dimen/space_lg"
+            app:cardBackgroundColor="?attr/colorSurfaceVariant"
+            app:cardCornerRadius="@dimen/radius_full"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/space_md"
+                android:paddingVertical="@dimen/space_xs">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_sm"
+                    android:layout_height="@dimen/icon_size_sm"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_search"
+                    app:tint="?attr/colorOnSurfaceVariant" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/inputSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_sm"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:completionThreshold="1"
+                    android:dropDownAnchor="@id/cardSearch"
+                    android:dropDownVerticalOffset="@dimen/space_xs"
+                    android:hint="@string/dashboard_search_hint"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingVertical="@dimen/space_sm"
+                    android:textAppearance="@style/TextAppearance.HRMS.BodyLarge"
+                    android:textColor="?attr/colorOnSurface"
+                    android:textColorHint="?attr/colorOnSurfaceVariant" />
+
+                <ImageView
+                    android:id="@+id/buttonClearSearch"
+                    android:layout_width="@dimen/icon_size_sm"
+                    android:layout_height="@dimen/icon_size_sm"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:contentDescription="@string/dashboard_cd_clear_search"
+                    android:focusable="true"
+                    android:src="@drawable/ic_close"
+                    android:visibility="gone"
+                    app:tint="?attr/colorOnSurfaceVariant" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <!-- Attendance card -->
         <com.google.android.material.card.MaterialCardView
             style="@style/Widget.HRMS.Card"
@@ -243,60 +302,60 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Mini info cards -->
-        <LinearLayout
+        <!-- Expenses entry -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardExpenses"
+            style="@style/Widget.HRMS.Card.Interactive"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="@dimen/space_lg">
+            android:layout_marginHorizontal="@dimen/space_lg"
+            android:layout_marginTop="@dimen/space_lg"
+            android:clickable="true"
+            android:focusable="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:baselineAligned="false"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <include
-                    android:id="@+id/cardLeaveBalance"
-                    layout="@layout/item_stat_card"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/space_sm"
-                    android:layout_weight="1" />
+                <ImageView
+                    android:layout_width="@dimen/icon_size_md"
+                    android:layout_height="@dimen/icon_size_md"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_salary"
+                    app:tint="?attr/colorPrimary" />
 
-                <include
-                    android:id="@+id/cardSalary"
-                    layout="@layout/item_stat_card"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/space_sm"
-                    android:layout_weight="1" />
+                    android:layout_marginStart="@dimen/space_md"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dashboard_expenses_title"
+                        android:textAppearance="@style/TextAppearance.HRMS.TitleMedium"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <TextView
+                        style="@style/Widget.HRMS.Text.Caption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_xxs"
+                        android:text="@string/dashboard_expenses_subtitle" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_md"
+                    android:layout_height="@dimen/icon_size_md"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_chevron_right"
+                    app:tint="?attr/colorOnSurfaceVariant" />
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_md"
-                android:baselineAligned="false"
-                android:orientation="horizontal">
-
-                <include
-                    android:id="@+id/cardPendingTasks"
-                    layout="@layout/item_stat_card"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/space_sm"
-                    android:layout_weight="1" />
-
-                <include
-                    android:id="@+id/cardUpcomingMeeting"
-                    layout="@layout/item_stat_card"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/space_sm"
-                    android:layout_weight="1" />
-            </LinearLayout>
-        </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Recent announcements -->
         <LinearLayout

@@ -56,10 +56,20 @@ public class FakeDashboardContentRepository implements DashboardContentRepositor
         MutableLiveData<Resource<List<Holiday>>> liveData = new MutableLiveData<>();
         liveData.setValue(Resource.loading());
         mainHandler.postDelayed(() -> {
+            // Mandatory / gazetted holidays for 2026 (India). Weekdays verified
+            // against the 2026 calendar (1 Jan 2026 = Thursday).
             List<Holiday> items = Arrays.asList(
-                    new Holiday("HOL-1", "02", "OCT", "Gandhi Jayanti", "Friday"),
-                    new Holiday("HOL-2", "12", "NOV", "Diwali", "Thursday"),
-                    new Holiday("HOL-3", "25", "DEC", "Christmas", "Friday"));
+                    new Holiday("HOL-1", "01", "JAN", "New Year's Day", "Thursday"),
+                    new Holiday("HOL-2", "26", "JAN", "Republic Day", "Monday"),
+                    new Holiday("HOL-3", "04", "MAR", "Holi", "Wednesday"),
+                    new Holiday("HOL-4", "03", "APR", "Good Friday", "Friday"),
+                    new Holiday("HOL-5", "14", "APR", "Ambedkar Jayanti", "Tuesday"),
+                    new Holiday("HOL-6", "01", "MAY", "May Day", "Friday"),
+                    new Holiday("HOL-7", "15", "AUG", "Independence Day", "Saturday"),
+                    new Holiday("HOL-8", "02", "OCT", "Gandhi Jayanti", "Friday"),
+                    new Holiday("HOL-9", "20", "OCT", "Dussehra", "Tuesday"),
+                    new Holiday("HOL-10", "08", "NOV", "Diwali", "Sunday"),
+                    new Holiday("HOL-11", "25", "DEC", "Christmas", "Friday"));
             liveData.setValue(items.isEmpty() ? Resource.empty() : Resource.success(items));
         }, SIMULATED_LATENCY_MS);
         return liveData;
