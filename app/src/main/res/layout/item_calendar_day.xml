@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/space_xxs"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textCalendarDay"
+        android:layout_width="@dimen/calendar_day_cell_size"
+        android:layout_height="@dimen/calendar_day_cell_size"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.HRMS.LabelMedium"
+        android:textColor="?attr/colorOnSurface"
+        tools:text="19" />
+
+    <View
+        android:id="@+id/dotCalendarStatus"
+        android:layout_width="@dimen/calendar_day_dot_size"
+        android:layout_height="@dimen/calendar_day_dot_size"
+        android:layout_marginTop="@dimen/space_xxs"
+        android:background="@drawable/shape_status_dot"
+        android:visibility="gone" />
+</LinearLayout>

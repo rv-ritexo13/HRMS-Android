@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="@dimen/space_sm">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer"
+        app:cardCornerRadius="@dimen/radius_full"
+        app:cardElevation="0dp">
+
+        <ImageView
+            android:id="@+id/imageNotificationIcon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_notifications"
+            app:tint="?attr/colorOnPrimaryContainer" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_md"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textNotificationTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.HRMS.TitleSmall"
+            android:textColor="?attr/colorOnSurface"
+            tools:text="Leave request approved" />
+
+        <TextView
+            android:id="@+id/textNotificationMessage"
+            style="@style/Widget.HRMS.Text.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xxs"
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="Your leave for Oct 2 has been approved by your manager." />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_sm"
+        android:gravity="end|center_vertical"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/dotUnread"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginBottom="@dimen/space_xxs"
+            android:background="@drawable/shape_unread_dot"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textNotificationTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.HRMS.LabelSmall"
+            android:textColor="?attr/colorOutline"
+            tools:text="1h ago" />
+    </LinearLayout>
+</LinearLayout>

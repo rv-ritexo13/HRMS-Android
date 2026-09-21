@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Spacing scale (4dp grid) -->
+    <dimen name="space_xxs">2dp</dimen>
+    <dimen name="space_xs">4dp</dimen>
+    <dimen name="space_sm">8dp</dimen>
+    <dimen name="space_md">12dp</dimen>
+    <dimen name="space_lg">16dp</dimen>
+    <dimen name="space_xl">24dp</dimen>
+    <dimen name="space_xxl">32dp</dimen>
+    <dimen name="space_xxxl">48dp</dimen>
+
+    <!-- Corner radii -->
+    <dimen name="radius_sm">8dp</dimen>
+    <dimen name="radius_md">12dp</dimen>
+    <dimen name="radius_lg">16dp</dimen>
+    <dimen name="radius_full">100dp</dimen>
+
+    <!-- Elevation -->
+    <dimen name="elevation_none">0dp</dimen>
+    <dimen name="elevation_low">1dp</dimen>
+    <dimen name="elevation_medium">3dp</dimen>
+    <dimen name="elevation_high">6dp</dimen>
+
+    <!-- Component sizing -->
+    <dimen name="button_height">48dp</dimen>
+    <dimen name="icon_size_sm">18dp</dimen>
+    <dimen name="icon_size_md">24dp</dimen>
+    <dimen name="icon_size_lg">40dp</dimen>
+    <dimen name="icon_size_xl">64dp</dimen>
+    <dimen name="avatar_size_sm">32dp</dimen>
+    <dimen name="avatar_size_md">44dp</dimen>
+    <dimen name="avatar_size_lg">72dp</dimen>
+    <dimen name="stroke_width_thin">1dp</dimen>
+    <dimen name="stroke_width_medium">1.5dp</dimen>
+
+    <!-- State-view sizing -->
+    <dimen name="state_view_icon_size">96dp</dimen>
+
+    <!-- Attendance calendar -->
+    <dimen name="calendar_day_cell_size">40dp</dimen>
+    <dimen name="calendar_day_dot_size">6dp</dimen>
+</resources>

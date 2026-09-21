@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Shared attributes for the state-view family: LoadingView, ErrorView, EmptyStateView -->
+    <declare-styleable name="StateView">
+        <attr name="stateIcon" format="reference" />
+        <attr name="stateTitle" format="string" />
+        <attr name="stateMessage" format="string" />
+        <attr name="stateButtonText" format="string" />
+        <attr name="stateShowButton" format="boolean" />
+    </declare-styleable>
+</resources>

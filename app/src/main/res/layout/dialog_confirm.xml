@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/space_xl"
+    android:paddingTop="@dimen/space_xl"
+    android:paddingBottom="@dimen/space_md">
+
+    <ImageView
+        android:id="@+id/imageDialogIcon"
+        android:layout_width="@dimen/icon_size_lg"
+        android:layout_height="@dimen/icon_size_lg"
+        android:layout_marginBottom="@dimen/space_lg"
+        android:importantForAccessibility="no"
+        app:tint="?attr/colorPrimary"
+        tools:src="@drawable/ic_logout" />
+
+    <TextView
+        android:id="@+id/textDialogTitle"
+        style="@style/Widget.HRMS.Dialog.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Log out?" />
+
+    <TextView
+        android:id="@+id/textDialogMessage"
+        style="@style/Widget.HRMS.Dialog.Body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_sm"
+        tools:text="You'll need to sign in again to access your HRMS workspace." />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xl"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonDialogNegative"
+            style="@style/Widget.HRMS.Button.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_cancel" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonDialogPositive"
+            style="@style/Widget.HRMS.Button.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_sm"
+            android:text="@string/action_confirm" />
+    </LinearLayout>
+</LinearLayout>

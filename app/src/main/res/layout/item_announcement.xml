@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="@dimen/space_sm">
+
+    <TextView
+        android:id="@+id/textAnnouncementTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.HRMS.TitleSmall"
+        android:textColor="?attr/colorOnSurface"
+        tools:text="Q3 town hall scheduled" />
+
+    <TextView
+        android:id="@+id/textAnnouncementBody"
+        style="@style/Widget.HRMS.Text.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xxs"
+        android:ellipsize="end"
+        android:maxLines="2"
+        tools:text="Join the all-hands session to hear about this quarter's goals and wins." />
+
+    <TextView
+        android:id="@+id/textAnnouncementPosted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xxs"
+        android:textAppearance="@style/TextAppearance.HRMS.LabelSmall"
+        android:textColor="?attr/colorOutline"
+        tools:text="2 days ago" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/space_sm"
+        android:background="?attr/colorOutlineVariant" />
+</LinearLayout>

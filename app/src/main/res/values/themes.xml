@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme (Light). Dark overrides live in values-night/themes.xml
+         using the same style name, so the system picks the right one automatically. -->
+    <style name="Theme.HRMS" parent="Theme.Material3.Light.NoActionBar">
+
+        <!-- Primary -->
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
+
+        <!-- Secondary -->
+        <item name="colorSecondary">@color/md_theme_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
+
+        <!-- Tertiary -->
+        <item name="colorTertiary">@color/md_theme_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_light_onTertiaryContainer</item>
+
+        <!-- Error -->
+        <item name="colorError">@color/md_theme_light_error</item>
+        <item name="colorOnError">@color/md_theme_light_onError</item>
+        <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
+        <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
+
+        <!-- Background / Surface -->
+        <item name="android:colorBackground">@color/md_theme_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_light_outline</item>
+        <item name="colorOutlineVariant">@color/md_theme_light_outlineVariant</item>
+
+        <item name="colorSurfaceContainerLowest">@color/md_theme_light_surfaceContainerLowest</item>
+        <item name="colorSurfaceContainerLow">@color/md_theme_light_surfaceContainerLow</item>
+        <item name="colorSurfaceContainer">@color/md_theme_light_surfaceContainer</item>
+        <item name="colorSurfaceContainerHigh">@color/md_theme_light_surfaceContainerHigh</item>
+        <item name="colorSurfaceContainerHighest">@color/md_theme_light_surfaceContainerHighest</item>
+
+        <!-- System bars -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+
+        <!-- Typography -->
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.HRMS.DisplayLarge</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.HRMS.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.HRMS.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.HRMS.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.HRMS.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.HRMS.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.HRMS.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.HRMS.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.HRMS.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.HRMS.BodySmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.HRMS.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.HRMS.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.HRMS.LabelSmall</item>
+
+        <!-- Shape -->
+        <item name="shapeAppearanceCornerSmall">@style/ShapeAppearance.HRMS.Small</item>
+        <item name="shapeAppearanceCornerMedium">@style/ShapeAppearance.HRMS.Medium</item>
+        <item name="shapeAppearanceCornerLarge">@style/ShapeAppearance.HRMS.Large</item>
+
+        <!-- Default component styles (design-system widgets, see styles.xml) -->
+        <item name="materialButtonStyle">@style/Widget.HRMS.Button.Primary</item>
+        <item name="materialCardViewStyle">@style/Widget.HRMS.Card</item>
+        <item name="textInputStyle">@style/Widget.HRMS.TextInputLayout</item>
+        <item name="bottomNavigationStyle">@style/Widget.HRMS.BottomNavigation</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.HRMS.Dialog</item>
+        <item name="toolbarStyle">@style/Widget.HRMS.Toolbar</item>
+        <item name="circularProgressIndicatorStyle">@style/Widget.HRMS.ProgressIndicator</item>
+    </style>
+
+    <style name="Theme.HRMS.Splash" parent="Theme.HRMS" />
+</resources>

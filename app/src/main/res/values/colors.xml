@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        HRMS Design System — Color Tokens (Light)
+        Material 3 color roles, hand-tuned around a professional blue/teal brand pair.
+        Mirrored for dark mode in values-night/colors.xml (same token names).
+    -->
+
+    <!-- Brand seed swatches (raw palette, referenced by role tokens below; avoid using
+         these directly in layouts — prefer the semantic ?attr/color* roles from themes.xml) -->
+    <color name="hrms_blue_10">#00174A</color>
+    <color name="hrms_blue_20">#002B77</color>
+    <color name="hrms_blue_40">#1957C2</color>
+    <color name="hrms_blue_80">#AEC6FF</color>
+    <color name="hrms_blue_90">#D7E2FF</color>
+    <color name="hrms_blue_100">#FFFFFF</color>
+
+    <color name="hrms_teal_20">#00382D</color>
+    <color name="hrms_teal_40">#2E7D6B</color>
+    <color name="hrms_teal_80">#96D4C1</color>
+    <color name="hrms_teal_90">#B5F1DE</color>
+
+    <color name="hrms_amber_20">#412D00</color>
+    <color name="hrms_amber_40">#7C5800</color>
+    <color name="hrms_amber_80">#F4BE48</color>
+    <color name="hrms_amber_90">#FFDEA6</color>
+
+    <color name="hrms_red_40">#BA1A1A</color>
+    <color name="hrms_red_80">#FFB4AB</color>
+    <color name="hrms_red_90">#FFDAD6</color>
+    <color name="hrms_red_10">#410002</color>
+
+    <color name="hrms_neutral_10">#1A1C1E</color>
+    <color name="hrms_neutral_99">#FBFCFF</color>
+    <color name="hrms_neutral_variant_30">#44474E</color>
+    <color name="hrms_neutral_variant_50">#74777F</color>
+    <color name="hrms_neutral_variant_80">#C4C6D0</color>
+    <color name="hrms_neutral_variant_90">#E1E2EC</color>
+
+    <!-- Semantic role tokens : Light -->
+    <color name="md_theme_light_primary">@color/hrms_blue_40</color>
+    <color name="md_theme_light_onPrimary">@color/hrms_blue_100</color>
+    <color name="md_theme_light_primaryContainer">@color/hrms_blue_90</color>
+    <color name="md_theme_light_onPrimaryContainer">@color/hrms_blue_10</color>
+
+    <color name="md_theme_light_secondary">@color/hrms_teal_40</color>
+    <color name="md_theme_light_onSecondary">#FFFFFF</color>
+    <color name="md_theme_light_secondaryContainer">@color/hrms_teal_90</color>
+    <color name="md_theme_light_onSecondaryContainer">@color/hrms_teal_20</color>
+
+    <color name="md_theme_light_tertiary">@color/hrms_amber_40</color>
+    <color name="md_theme_light_onTertiary">#FFFFFF</color>
+    <color name="md_theme_light_tertiaryContainer">@color/hrms_amber_90</color>
+    <color name="md_theme_light_onTertiaryContainer">@color/hrms_amber_20</color>
+
+    <color name="md_theme_light_error">@color/hrms_red_40</color>
+    <color name="md_theme_light_onError">#FFFFFF</color>
+    <color name="md_theme_light_errorContainer">@color/hrms_red_90</color>
+    <color name="md_theme_light_onErrorContainer">@color/hrms_red_10</color>
+
+    <color name="md_theme_light_background">@color/hrms_neutral_99</color>
+    <color name="md_theme_light_onBackground">@color/hrms_neutral_10</color>
+    <color name="md_theme_light_surface">@color/hrms_neutral_99</color>
+    <color name="md_theme_light_onSurface">@color/hrms_neutral_10</color>
+    <color name="md_theme_light_surfaceVariant">@color/hrms_neutral_variant_90</color>
+    <color name="md_theme_light_onSurfaceVariant">@color/hrms_neutral_variant_30</color>
+    <color name="md_theme_light_outline">@color/hrms_neutral_variant_50</color>
+    <color name="md_theme_light_outlineVariant">@color/hrms_neutral_variant_80</color>
+
+    <color name="md_theme_light_surfaceContainerLowest">#FFFFFF</color>
+    <color name="md_theme_light_surfaceContainerLow">#F5F6FA</color>
+    <color name="md_theme_light_surfaceContainer">#EFF0F5</color>
+    <color name="md_theme_light_surfaceContainerHigh">#E9EAEF</color>
+    <color name="md_theme_light_surfaceContainerHighest">#E3E4E9</color>
+
+    <!-- Status colors used across HRMS modules (attendance, leave, payroll) -->
+    <color name="hrms_status_success">#1E8E3E</color>
+    <color name="hrms_status_success_container">#D6F3DD</color>
+    <color name="hrms_status_warning">#B26A00</color>
+    <color name="hrms_status_warning_container">#FFE7C2</color>
+    <color name="hrms_status_info">@color/hrms_blue_40</color>
+    <color name="hrms_status_info_container">@color/hrms_blue_90</color>
+
+    <!-- Additional attendance status colors (Phase 3): Present/Late/Work From Home reuse
+         success/warning/info above; Absent reuses the error palette. Half Day and Leave get
+         their own tones since neither maps cleanly onto an existing role. -->
+    <color name="hrms_status_absent">@color/hrms_red_40</color>
+    <color name="hrms_status_absent_container">@color/hrms_red_90</color>
+    <color name="hrms_status_half_day">#00696D</color>
+    <color name="hrms_status_half_day_container">#9DF1F5</color>
+    <color name="hrms_status_leave">#6750A4</color>
+    <color name="hrms_status_leave_container">#EADDFF</color>
+
+    <color name="hrms_scrim">#66000000</color>
+    <color name="transparent">#00000000</color>
+</resources>

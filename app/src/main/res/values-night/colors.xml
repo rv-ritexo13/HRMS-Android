@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        HRMS Design System — Color Tokens (Dark)
+        Same semantic token names as values/colors.xml so themes.xml resolves
+        identically regardless of the active night-mode qualifier.
+    -->
+
+    <color name="md_theme_dark_primary">#AEC6FF</color>
+    <color name="md_theme_dark_onPrimary">#002B77</color>
+    <color name="md_theme_dark_primaryContainer">#00458F</color>
+    <color name="md_theme_dark_onPrimaryContainer">#D7E2FF</color>
+
+    <color name="md_theme_dark_secondary">#96D4C1</color>
+    <color name="md_theme_dark_onSecondary">#00382D</color>
+    <color name="md_theme_dark_secondaryContainer">#005141</color>
+    <color name="md_theme_dark_onSecondaryContainer">#B5F1DE</color>
+
+    <color name="md_theme_dark_tertiary">#F4BE48</color>
+    <color name="md_theme_dark_onTertiary">#412D00</color>
+    <color name="md_theme_dark_tertiaryContainer">#5C4200</color>
+    <color name="md_theme_dark_onTertiaryContainer">#FFDEA6</color>
+
+    <color name="md_theme_dark_error">#FFB4AB</color>
+    <color name="md_theme_dark_onError">#690005</color>
+    <color name="md_theme_dark_errorContainer">#93000A</color>
+    <color name="md_theme_dark_onErrorContainer">#FFDAD6</color>
+
+    <color name="md_theme_dark_background">#121316</color>
+    <color name="md_theme_dark_onBackground">#E3E2E6</color>
+    <color name="md_theme_dark_surface">#121316</color>
+    <color name="md_theme_dark_onSurface">#E3E2E6</color>
+    <color name="md_theme_dark_surfaceVariant">#44474E</color>
+    <color name="md_theme_dark_onSurfaceVariant">#C4C6D0</color>
+    <color name="md_theme_dark_outline">#8E9099</color>
+    <color name="md_theme_dark_outlineVariant">#44474E</color>
+
+    <color name="md_theme_dark_surfaceContainerLowest">#0C0D0F</color>
+    <color name="md_theme_dark_surfaceContainerLow">#1A1C1E</color>
+    <color name="md_theme_dark_surfaceContainer">#1E2022</color>
+    <color name="md_theme_dark_surfaceContainerHigh">#292B2D</color>
+    <color name="md_theme_dark_surfaceContainerHighest">#343638</color>
+
+    <!-- Status colors (dark-adjusted for AA contrast on dark surfaces) -->
+    <color name="hrms_status_success">#7FDB8F</color>
+    <color name="hrms_status_success_container">#0E4A20</color>
+    <color name="hrms_status_warning">#FFC876</color>
+    <color name="hrms_status_warning_container">#4F3800</color>
+    <color name="hrms_status_info">#AEC6FF</color>
+    <color name="hrms_status_info_container">#00458F</color>
+
+    <!-- Additional attendance status colors (Phase 3), dark-adjusted for AA contrast. -->
+    <color name="hrms_status_absent">#FFB4AB</color>
+    <color name="hrms_status_absent_container">#93000A</color>
+    <color name="hrms_status_half_day">#83D4D9</color>
+    <color name="hrms_status_half_day_container">#004F52</color>
+    <color name="hrms_status_leave">#CFBCFF</color>
+    <color name="hrms_status_leave_container">#4F378A</color>
+
+    <color name="hrms_scrim">#B3000000</color>
+</resources>

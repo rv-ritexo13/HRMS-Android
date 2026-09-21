@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/space_xxl">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/space_lg"
+            android:paddingTop="@dimen/space_xl"
+            android:paddingBottom="@dimen/space_md"
+            android:text="@string/attendance_title"
+            android:textAppearance="@style/TextAppearance.HRMS.HeadlineSmall"
+            android:textColor="?attr/colorOnSurface" />
+
+        <!-- Missing check-out banner (edge case: app was closed mid-day) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardMissingCheckout"
+            style="@style/Widget.HRMS.Card.Outlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_lg"
+            android:layout_marginBottom="@dimen/space_lg"
+            android:visibility="gone"
+            app:strokeColor="@color/hrms_status_warning"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size_md"
+                    android:layout_height="@dimen/icon_size_md"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_event_busy"
+                    app:tint="@color/hrms_status_warning" />
+
+                <TextView
+                    android:id="@+id/textMissingCheckout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_md"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/TextAppearance.HRMS.BodyMedium"
+                    android:textColor="?attr/colorOnSurface"
+                    tools:text="You forgot to check out on 18 Sep 2026" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonMissingCheckoutAction"
+                style="@style/Widget.HRMS.Button.Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/space_xs"
+                android:text="@string/attendance_missing_checkout_action" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Today's Attendance -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.HRMS.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_lg"
+            android:layout_marginBottom="@dimen/space_xl">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/attendance_today_title"
+                        android:textAppearance="@style/TextAppearance.HRMS.TitleMedium"
+                        android:textColor="?attr/colorOnSurface" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipAttendanceStatus"
+                        style="@style/Widget.HRMS.Chip.Status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:focusable="false"
+                        tools:text="Not Checked In" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_lg"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Widget.HRMS.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dashboard_attendance_check_in_label" />
+
+                        <TextView
+                            android:id="@+id/textCheckInTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_xxs"
+                            android:text="@string/dashboard_attendance_time_placeholder"
+                            android:textAppearance="@style/TextAppearance.HRMS.TitleMedium"
+                            android:textColor="?attr/colorOnSurface" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Widget.HRMS.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dashboard_attendance_check_out_label" />
+
+                        <TextView
+                            android:id="@+id/textCheckOutTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_xxs"
+                            android:text="@string/dashboard_attendance_time_placeholder"
+                            android:textAppearance="@style/TextAppearance.HRMS.TitleMedium"
+                            android:textColor="?attr/colorOnSurface" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Widget.HRMS.Text.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dashboard_attendance_hours_label" />
+
+                        <TextView
+                            android:id="@+id/textWorkingHours"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_xxs"
+                            android:text="@string/dashboard_attendance_hours_placeholder"
+                            android:textAppearance="@style/TextAppearance.HRMS.TitleMedium"
+                            android:textColor="?attr/colorOnSurface" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_lg"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonCheckIn"
+                        style="@style/Widget.HRMS.Button.Primary"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/space_sm"
+                        android:layout_weight="1"
+                        android:text="@string/dashboard_button_check_in" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonCheckOut"
+                        style="@style/Widget.HRMS.Button.Secondary"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/space_sm"
+                        android:layout_weight="1"
+                        android:enabled="false"
+                        android:text="@string/dashboard_button_check_out" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Shared month selector: drives Monthly Summary, Calendar and History together -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_lg"
+            android:layout_marginBottom="@dimen/space_md"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonPreviousMonth"
+                style="@style/Widget.HRMS.Button.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/attendance_cd_previous_month"
+                android:rotation="180"
+                app:icon="@drawable/ic_chevron_right"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp" />
+
+            <TextView
+                android:id="@+id/textSelectedMonth"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.HRMS.TitleMedium"
+                android:textColor="?attr/colorOnSurface"
+                tools:text="September 2026" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonNextMonth"
+                style="@style/Widget.HRMS.Button.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/attendance_cd_next_month"
+                app:icon="@drawable/ic_chevron_right"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp" />
+        </LinearLayout>
+
+        <!-- Monthly summary -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_xl"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/space_lg">
+
+            <TextView
+                style="@style/Widget.HRMS.Text.SectionHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_sm"
+                android:text="@string/attendance_section_summary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <include
+                    android:id="@+id/statPresent"
+                    layout="@layout/item_attendance_summary_stat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/space_sm"
+                    android:layout_weight="1" />
+
+                <include
+                    android:id="@+id/statLate"
+                    layout="@layout/item_attendance_summary_stat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_xs"
+                    android:layout_weight="1" />
+
+                <include
+                    android:id="@+id/statHalfDay"
+                    layout="@layout/item_attendance_summary_stat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_sm"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_md"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <include
+                    android:id="@+id/statAbsent"
+                    layout="@layout/item_attendance_summary_stat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/space_sm"
+                    android:layout_weight="1" />
+
+                <include
+                    android:id="@+id/statLeave"
+                    layout="@layout/item_attendance_summary_stat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_xs"
+                    android:layout_weight="1" />
+
+                <include
+                    android:id="@+id/statWfh"
+                    layout="@layout/item_attendance_summary_stat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_sm"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Calendar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_xl"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/space_lg">
+
+            <TextView
+                style="@style/Widget.HRMS.Text.SectionHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_sm"
+                android:text="@string/attendance_section_calendar" />
+
+            <LinearLayout
+                android:id="@+id/rowCalendarWeekdays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerCalendarDays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                tools:itemCount="35"
+                tools:listitem="@layout/item_calendar_day"
+                tools:spanCount="7" />
+        </LinearLayout>
+
+        <!-- History -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_xl"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/space_lg">
+
+            <TextView
+                style="@style/Widget.HRMS.Text.SectionHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_sm"
+                android:text="@string/attendance_section_history" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/space_xs">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/Widget.HRMS.Text.Caption"
+                    android:text="@string/attendance_history_column_date" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    style="@style/Widget.HRMS.Text.Caption"
+                    android:text="@string/attendance_history_column_checkin" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    style="@style/Widget.HRMS.Text.Caption"
+                    android:text="@string/attendance_history_column_checkout" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:gravity="center"
+                    style="@style/Widget.HRMS.Text.Caption"
+                    android:text="@string/attendance_history_column_hours" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.2"
+                    android:gravity="center"
+                    style="@style/Widget.HRMS.Text.Caption"
+                    android:text="@string/attendance_history_column_status" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?attr/colorOutlineVariant" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never" />
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progressHistory"
+                    style="@style/Widget.HRMS.ProgressIndicator"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/textHistoryEmpty"
+                    style="@style/Widget.HRMS.Text.Caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/space_lg"
+                    android:visibility="gone"
+                    tools:text="No attendance records for this month" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- Corrections -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/space_lg">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_sm"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Widget.HRMS.Text.SectionHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/attendance_section_corrections" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonRequestCorrection"
+                    style="@style/Widget.HRMS.Button.Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/attendance_request_correction" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerCorrections"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never" />
+
+                <TextView
+                    android:id="@+id/textCorrectionsEmpty"
+                    style="@style/Widget.HRMS.Text.Caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/space_lg"
+                    android:visibility="gone"
+                    tools:text="No correction requests yet" />
+            </FrameLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

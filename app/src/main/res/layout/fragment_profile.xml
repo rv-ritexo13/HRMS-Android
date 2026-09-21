@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_lg"
+        android:text="@string/profile_title"
+        android:textAppearance="@style/TextAppearance.HRMS.HeadlineSmall"
+        android:textColor="?attr/colorOnSurface" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingHorizontal="@dimen/space_lg"
+                android:paddingBottom="@dimen/space_xl">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- ===== Header card ===== -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/headerCard"
+                        style="@style/Widget.HRMS.Card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:layout_width="@dimen/avatar_size_lg"
+                                    android:layout_height="@dimen/avatar_size_lg"
+                                    app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                                    app:cardCornerRadius="@dimen/radius_full"
+                                    app:cardElevation="@dimen/elevation_none">
+
+                                    <TextView
+                                        android:id="@+id/textHeaderInitials"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:textAppearance="@style/TextAppearance.HRMS.TitleLarge"
+                                        android:textColor="?attr/colorOnPrimaryContainer"
+                                        tools:text="RV" />
+                                </com.google.android.material.card.MaterialCardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/space_lg"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/textHeaderName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textAppearance="@style/TextAppearance.HRMS.TitleLarge"
+                                        android:textColor="?attr/colorOnSurface"
+                                        tools:text="Rahul Verma" />
+
+                                    <TextView
+                                        android:id="@+id/textHeaderRole"
+                                        style="@style/Widget.HRMS.Text.Caption"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/space_xxs"
+                                        tools:text="Software Engineer · Engineering" />
+
+                                    <TextView
+                                        android:id="@+id/textHeaderId"
+                                        style="@style/Widget.HRMS.Text.Caption"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        tools:text="EMP001" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/stroke_width_thin"
+                                android:layout_marginVertical="@dimen/space_md"
+                                android:background="?attr/colorOutline" />
+
+                            <include
+                                android:id="@+id/qEmail"
+                                layout="@layout/item_profile_field"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                            <include
+                                android:id="@+id/qPhone"
+                                layout="@layout/item_profile_field"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/buttonEditProfile"
+                                style="@style/Widget.HRMS.Button.Secondary"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_md"
+                                android:text="@string/profile_edit"
+                                app:icon="@drawable/ic_edit" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ===== Personal Information ===== -->
+                    <TextView
+                        style="@style/Widget.HRMS.Text.SectionHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_xl"
+                        android:layout_marginBottom="@dimen/space_sm"
+                        android:text="@string/profile_section_personal" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/Widget.HRMS.Card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include android:id="@+id/pDob" layout="@layout/item_profile_field"
+                                android:layout_width="match_parent" android:layout_height="wrap_content" />
+                            <include android:id="@+id/pGender" layout="@layout/item_profile_field"
+                                android:layout_width="match_parent" android:layout_height="wrap_content" />
+                            <include android:id="@+id/pPhone" layout="@layout/item_profile_field"
+                                android:layout_width="match_parent" android:layout_height="wrap_content" />
+                            <include android:id="@+id/pEmail" layout="@layout/item_profile_field"
+                                android:layout_width="match_parent" android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ===== Employment Information ===== -->
+                    <TextView
+                        style="@style/Widget.HRMS.Text.SectionHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_xl"
+                        android:layout_marginBottom="@dimen/space_sm"
+                        android:text="@string/profile_section_employment" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/Widget.HRMS.Card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include android:id="@+id/eId" layout="@layout/item_profile_field"
+                                android:layout_width="match_parent" android:layout_height="wrap_content" />
+                            <include android:id="@+id/eDept" layout="@layout/item_profile_field"
+                                android:layout_width="match_parent" android:layout_height="wrap_content" />
+                            <include android:id="@+id/eDesignation" layout="@layout/item_profile_field"
+                                android:layout_width="match_parent" android:layout_height="wrap_content" />
+                            <include android:id="@+id/eManager" layout="@layout/item_profile_field"
+                                android:layout_width="match_parent" android:layout_height="wrap_content" />
+                            <include android:id="@+id/eJoining" layout="@layout/item_profile_field"
+                                android:layout_width="match_parent" android:layout_height="wrap_content" />
+                            <include android:id="@+id/eType" layout="@layout/item_profile_field"
+                                android:layout_width="match_parent" android:layout_height="wrap_content" />
+                            <include android:id="@+id/eLocation" layout="@layout/item_profile_field"
+                                android:layout_width="match_parent" android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ===== Emergency Contact ===== -->
+                    <TextView
+                        style="@style/Widget.HRMS.Text.SectionHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_xl"
+                        android:layout_marginBottom="@dimen/space_sm"
+                        android:text="@string/profile_section_emergency" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/Widget.HRMS.Card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include android:id="@+id/emName" layout="@layout/item_profile_field"
+                                android:layout_width="match_parent" android:layout_height="wrap_content" />
+                            <include android:id="@+id/emRelationship" layout="@layout/item_profile_field"
+                                android:layout_width="match_parent" android:layout_height="wrap_content" />
+                            <include android:id="@+id/emPhone" layout="@layout/item_profile_field"
+                                android:layout_width="match_parent" android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ===== Documents entry ===== -->
+                    <TextView
+                        style="@style/Widget.HRMS.Text.SectionHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_xl"
+                        android:layout_marginBottom="@dimen/space_sm"
+                        android:text="@string/profile_section_documents" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardDocuments"
+                        style="@style/Widget.HRMS.Card.Interactive"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="@dimen/icon_size_md"
+                                android:layout_height="@dimen/icon_size_md"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_folder"
+                                app:tint="?attr/colorPrimary" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/space_md"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/documents_title"
+                                    android:textAppearance="@style/TextAppearance.HRMS.BodyLarge"
+                                    android:textColor="?attr/colorOnSurface" />
+
+                                <TextView
+                                    style="@style/Widget.HRMS.Text.Caption"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/profile_documents_subtitle" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="@dimen/icon_size_sm"
+                                android:layout_height="@dimen/icon_size_sm"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_chevron_right"
+                                app:tint="?attr/colorOnSurfaceVariant" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ===== Preferences (dark mode) ===== -->
+                    <TextView
+                        style="@style/Widget.HRMS.Text.SectionHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_xl"
+                        android:layout_marginBottom="@dimen/space_sm"
+                        android:text="@string/profile_settings_header" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/Widget.HRMS.Card.Outlined"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="@dimen/icon_size_md"
+                                android:layout_height="@dimen/icon_size_md"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_dark_mode"
+                                app:tint="?attr/colorOnSurfaceVariant" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/space_md"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/profile_dark_mode"
+                                    android:textAppearance="@style/TextAppearance.HRMS.BodyLarge"
+                                    android:textColor="?attr/colorOnSurface" />
+
+                                <TextView
+                                    style="@style/Widget.HRMS.Text.Caption"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/profile_dark_mode_desc" />
+                            </LinearLayout>
+
+                            <com.google.android.material.materialswitch.MaterialSwitch
+                                android:id="@+id/switchDarkMode"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ===== About ===== -->
+                    <TextView
+                        style="@style/Widget.HRMS.Text.SectionHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_xl"
+                        android:layout_marginBottom="@dimen/space_sm"
+                        android:text="@string/profile_about_header" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/Widget.HRMS.Card.Outlined"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/textAppVersion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.HRMS.BodyMedium"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            tools:text="Version 0.1.0-phase1" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonLogout"
+                        style="@style/Widget.HRMS.Button.Destructive"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_xl"
+                        android:text="@string/profile_logout" />
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.triotech.hrms.ui.components.LoadingView
+            android:id="@+id/loadingView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <com.triotech.hrms.ui.components.ErrorView
+            android:id="@+id/errorView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</LinearLayout>

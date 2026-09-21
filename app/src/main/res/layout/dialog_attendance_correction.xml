@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/space_xl"
+    android:paddingTop="@dimen/space_xl"
+    android:paddingBottom="@dimen/space_lg">
+
+    <TextView
+        android:id="@+id/textCorrectionDialogTitle"
+        style="@style/Widget.HRMS.Dialog.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/attendance_correction_dialog_title" />
+
+    <TextView
+        style="@style/Widget.HRMS.Text.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_lg"
+        android:text="@string/attendance_correction_label_date" />
+
+    <TextView
+        android:id="@+id/textCorrectionDialogDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xxs"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingVertical="@dimen/space_sm"
+        android:textAppearance="@style/TextAppearance.HRMS.TitleMedium"
+        android:textColor="?attr/colorPrimary"
+        tools:text="19 Sep 2026" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_lg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Widget.HRMS.Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/attendance_correction_label_actual_checkin" />
+
+            <TextView
+                android:id="@+id/textCorrectionDialogActualCheckin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_xxs"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingVertical="@dimen/space_sm"
+                android:textAppearance="@style/TextAppearance.HRMS.TitleMedium"
+                android:textColor="?attr/colorPrimary"
+                tools:text="10:15 AM" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonClearActualCheckin"
+            style="@style/Widget.HRMS.Button.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/attendance_correction_clear_checkin"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/Widget.HRMS.Text.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_lg"
+        android:text="@string/attendance_correction_label_expected_checkin" />
+
+    <TextView
+        android:id="@+id/textCorrectionDialogExpectedCheckin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xxs"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingVertical="@dimen/space_sm"
+        android:textAppearance="@style/TextAppearance.HRMS.TitleMedium"
+        android:textColor="?attr/colorPrimary"
+        tools:text="09:30 AM" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutCorrectionReason"
+        style="@style/Widget.HRMS.TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_lg"
+        android:hint="@string/attendance_correction_label_reason">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editCorrectionReason"
+            style="@style/Widget.HRMS.TextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:hint="@string/attendance_correction_hint_reason"
+            android:inputType="textMultiLine"
+            android:minLines="2" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonCorrectionSubmit"
+        style="@style/Widget.HRMS.Button.Primary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xl"
+        android:text="@string/attendance_correction_submit" />
+</LinearLayout>

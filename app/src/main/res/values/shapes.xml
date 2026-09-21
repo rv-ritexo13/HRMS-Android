@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Shared corner-shape tokens used by buttons, cards, text fields and dialogs -->
+    <style name="ShapeAppearance.HRMS.Small" parent="ShapeAppearance.Material3.Corner.Small">
+        <item name="cornerSize">@dimen/radius_sm</item>
+    </style>
+
+    <style name="ShapeAppearance.HRMS.Medium" parent="ShapeAppearance.Material3.Corner.Medium">
+        <item name="cornerSize">@dimen/radius_md</item>
+    </style>
+
+    <style name="ShapeAppearance.HRMS.Large" parent="ShapeAppearance.Material3.Corner.Large">
+        <item name="cornerSize">@dimen/radius_lg</item>
+    </style>
+
+    <style name="ShapeAppearance.HRMS.Full" parent="ShapeAppearance.Material3.Corner.Full">
+        <item name="cornerSize">@dimen/radius_full</item>
+    </style>
+</resources>

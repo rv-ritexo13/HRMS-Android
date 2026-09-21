@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/dashboardFragment"
+        android:icon="@drawable/ic_home"
+        android:title="@string/nav_home" />
+    <item
+        android:id="@+id/attendanceFragment"
+        android:icon="@drawable/ic_attendance"
+        android:title="@string/nav_attendance" />
+    <item
+        android:id="@+id/leaveFragment"
+        android:icon="@drawable/ic_holiday"
+        android:title="@string/nav_leave" />
+    <item
+        android:id="@+id/salaryFragment"
+        android:icon="@drawable/ic_salary"
+        android:title="@string/nav_salary" />
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/nav_profile" />
+</menu>

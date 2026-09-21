@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HRMS</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_employees">Employees</string>
+    <string name="nav_attendance">Attendance</string>
+    <string name="nav_leave">Leave</string>
+    <string name="nav_salary">Salary</string>
+    <string name="nav_profile">Profile</string>
+
+    <!-- Auth: Login -->
+    <string name="login_app_tagline">Sign in to your HRMS workspace</string>
+    <string name="login_label_employee_id">Employee ID or email</string>
+    <string name="login_label_password">Password</string>
+    <string name="login_cd_toggle_password">Show or hide password</string>
+    <string name="login_remember_me">Remember me</string>
+    <string name="login_forgot_password">Forgot password?</string>
+    <string name="login_button">Log in</string>
+    <string name="login_error_field_required">This field is required</string>
+    <string name="login_error_invalid_credentials">Invalid Employee ID or password</string>
+    <string name="login_demo_accounts_title">Demo accounts (Phase 2 mock login)</string>
+    <string name="login_demo_employee">Employee — EMP001 / 123456</string>
+    <string name="login_demo_admin">Admin — ADMIN001 / 123456</string>
+    <string name="login_forgot_password_title">Forgot password?</string>
+    <string name="login_forgot_password_message">Password reset isn\'t available in this preview build yet. Contact your HR administrator to reset your password.</string>
+
+    <!-- Sign up -->
+    <string name="signup_prompt">Don\'t have an account? Sign up</string>
+    <string name="signup_title">Create account</string>
+    <string name="signup_tagline">Join your HRMS workspace</string>
+    <string name="signup_label_name">Full name</string>
+    <string name="signup_label_employee_id">Employee ID</string>
+    <string name="signup_label_email">Work email</string>
+    <string name="signup_label_password">Password</string>
+    <string name="signup_label_confirm_password">Confirm password</string>
+    <string name="signup_button">Create account</string>
+    <string name="signup_have_account">Already have an account? Log in</string>
+    <string name="signup_cd_back">Back</string>
+    <string name="signup_err_name">Please enter your name</string>
+    <string name="signup_err_employee_id">Please enter an Employee ID</string>
+    <string name="signup_err_email">Enter a valid email address</string>
+    <string name="signup_err_password">Password must be at least 6 characters</string>
+    <string name="signup_err_confirm">Passwords don\'t match</string>
+    <string name="signup_success">Account created. Welcome!</string>
+    <string name="action_ok">OK</string>
+
+    <!-- Admin -->
+    <string name="admin_dashboard_title">Admin Dashboard</string>
+    <string name="admin_dashboard_empty_title">Admin tools are coming soon</string>
+    <string name="admin_dashboard_empty_message">Employee management, approvals and org-wide reporting will land in a later phase.</string>
+
+    <!-- Leave (placeholder) -->
+    <string name="leave_title">Leave</string>
+    <string name="leave_empty_title">No leave requests yet</string>
+    <string name="leave_empty_message">Apply for leave and your requests will appear here.</string>
+    <string name="leave_error_title">Couldn\'t load leave</string>
+    <string name="leave_error_message">Something went wrong. Pull to refresh or try again.</string>
+
+    <!-- Leave type labels -->
+    <string name="leave_type_casual">Casual Leave</string>
+    <string name="leave_type_sick">Sick Leave</string>
+    <string name="leave_type_earned">Earned Leave</string>
+    <string name="leave_type_wfh">Work From Home</string>
+    <string name="leave_type_optional">Optional Holiday</string>
+
+    <!-- Leave status labels -->
+    <string name="leave_status_pending">Pending</string>
+    <string name="leave_status_approved">Approved</string>
+    <string name="leave_status_rejected">Rejected</string>
+    <string name="leave_status_cancelled">Cancelled</string>
+
+    <!-- Leave dashboard -->
+    <string name="leave_balance_header">Leave Balance</string>
+    <string name="leave_history_header">Leave History</string>
+    <string name="leave_balance_available_format">%1$d Days</string>
+    <string name="leave_balance_used_format">%1$d of %2$d used</string>
+    <string name="leave_apply">Apply Leave</string>
+    <string name="leave_days_format">%1$d day(s)</string>
+
+    <!-- Apply Leave -->
+    <string name="apply_leave_title">Apply Leave</string>
+    <string name="apply_leave_hint_type">Leave type</string>
+    <string name="apply_leave_hint_start">Start date</string>
+    <string name="apply_leave_hint_end">End date</string>
+    <string name="apply_leave_hint_days">Number of days</string>
+    <string name="apply_leave_hint_reason">Reason</string>
+    <string name="apply_leave_attachment_label">Attachment (optional)</string>
+    <string name="apply_leave_attachment_add">Add attachment</string>
+    <string name="apply_leave_attachment_none">No file selected</string>
+    <string name="apply_leave_submit">Apply Leave</string>
+    <string name="apply_leave_submitted">Leave request submitted</string>
+    <string name="apply_leave_error">Couldn\'t submit your request. Please try again.</string>
+    <string name="apply_leave_err_type">Please select a leave type</string>
+    <string name="apply_leave_err_start">Please pick a start date</string>
+    <string name="apply_leave_err_end">Please pick an end date</string>
+    <string name="apply_leave_err_range">End date can\'t be before the start date</string>
+    <string name="apply_leave_err_reason">Please enter a reason</string>
+    <string name="apply_leave_cd_back">Back</string>
+
+    <!-- Leave detail -->
+    <string name="leave_detail_title">Leave Details</string>
+    <string name="leave_detail_type">Leave Type</string>
+    <string name="leave_detail_start">Start Date</string>
+    <string name="leave_detail_end">End Date</string>
+    <string name="leave_detail_days">Number of Days</string>
+    <string name="leave_detail_reason">Reason</string>
+    <string name="leave_detail_applied">Applied On</string>
+    <string name="leave_detail_status">Status</string>
+    <string name="leave_detail_manager_comments">Manager Comments</string>
+    <string name="leave_detail_attachment">Attachment</string>
+    <string name="leave_detail_no_comments">No comments yet</string>
+    <string name="leave_detail_cancel">Cancel Request</string>
+    <string name="leave_detail_cancelled">Request cancelled</string>
+    <string name="leave_detail_cancel_error">Couldn\'t cancel this request.</string>
+    <string name="leave_detail_cancel_dialog_title">Cancel this request?</string>
+    <string name="leave_detail_cancel_dialog_message">This will withdraw your pending leave request. You can apply again later.</string>
+    <string name="leave_detail_cd_back">Back</string>
+
+    <!-- Salary &amp; Payslip -->
+    <string name="salary_title">Salary</string>
+    <string name="salary_empty_title">No salary records yet</string>
+    <string name="salary_empty_message">Your payslips will appear here once your first salary is processed.</string>
+    <string name="salary_error_title">Couldn\'t load salary</string>
+    <string name="salary_error_message">Something went wrong loading your salary. Pull to refresh or try again.</string>
+
+    <string name="salary_summary_gross">Gross Salary</string>
+    <string name="salary_summary_deductions">Deductions</string>
+    <string name="salary_summary_net">Net Salary</string>
+    <string name="salary_credited_on">Salary Credited</string>
+    <string name="salary_pending">Salary Pending</string>
+    <string name="salary_view_payslip">View Payslip</string>
+
+    <string name="salary_earnings">Earnings</string>
+    <string name="salary_deductions">Deductions</string>
+    <string name="salary_component_basic">Basic Salary</string>
+    <string name="salary_component_hra">House Rent Allowance (HRA)</string>
+    <string name="salary_component_special">Special Allowance</string>
+    <string name="salary_component_other_allowances">Other Allowances</string>
+    <string name="salary_component_pf">Provident Fund (PF)</string>
+    <string name="salary_component_ptax">Professional Tax</string>
+    <string name="salary_component_other_deductions">Other Deductions</string>
+    <string name="salary_gross_total">Gross Earnings</string>
+    <string name="salary_deductions_total">Total Deductions</string>
+
+    <string name="salary_history_title">Salary History</string>
+
+    <!-- Payslip detail -->
+    <string name="payslip_title">Payslip</string>
+    <string name="payslip_company_name">Riteox Software Pvt. Ltd.</string>
+    <string name="payslip_pay_period">Pay Period</string>
+    <string name="payslip_employee_name">Employee Name</string>
+    <string name="payslip_employee_id">Employee ID</string>
+    <string name="payslip_department">Department</string>
+    <string name="payslip_designation">Designation</string>
+    <string name="payslip_pay_date">Pay Date</string>
+    <string name="payslip_status">Status</string>
+    <string name="payslip_net_payable">Net Payable</string>
+    <string name="payslip_action_view_pdf">View PDF</string>
+    <string name="payslip_action_download">Download</string>
+    <string name="payslip_action_share">Share</string>
+    <string name="payslip_pdf_ready">Payslip PDF ready</string>
+    <string name="payslip_downloaded_format">Saved to %1$s</string>
+    <string name="payslip_share_subject_format">Payslip - %1$s</string>
+    <string name="payslip_share_chooser">Share payslip</string>
+    <string name="payslip_error_generating">Couldn\'t generate the payslip PDF.</string>
+    <string name="payslip_error_no_viewer">No PDF viewer app found on this device.</string>
+    <string name="payslip_cd_back">Back</string>
+
+    <!-- Employee Dashboard (Home) -->
+    <string name="dashboard_cd_notifications">Notifications</string>
+    <string name="dashboard_cd_avatar">Profile photo</string>
+    <string name="dashboard_attendance_title">Today\'s Attendance</string>
+    <string name="dashboard_attendance_check_in_label">Check-in</string>
+    <string name="dashboard_attendance_check_out_label">Check-out</string>
+    <string name="dashboard_attendance_hours_label">Working hours</string>
+    <string name="dashboard_attendance_time_placeholder">--:--</string>
+    <string name="dashboard_attendance_hours_in_progress">In progress</string>
+    <string name="dashboard_attendance_hours_placeholder">—</string>
+    <string name="dashboard_status_not_checked_in">Not Checked In</string>
+    <string name="dashboard_status_checked_in">Checked In</string>
+    <string name="dashboard_status_checked_out">Day Completed</string>
+    <string name="dashboard_button_check_in">Check In</string>
+    <string name="dashboard_button_check_out">Check Out</string>
+    <string name="dashboard_toast_checked_in_format">Checked in at %1$s</string>
+    <string name="dashboard_toast_checked_out_format">Checked out at %1$s</string>
+    <string name="dashboard_mini_leave_balance">Leave Balance</string>
+    <string name="dashboard_mini_leave_balance_format">%1$d Days</string>
+    <string name="dashboard_mini_salary">Salary (Net, Est.)</string>
+    <string name="dashboard_mini_pending_tasks">Pending Tasks</string>
+    <string name="dashboard_mini_upcoming_meeting">Upcoming Meeting</string>
+    <string name="dashboard_section_announcements">Recent announcements</string>
+    <string name="dashboard_section_holidays">Upcoming holidays</string>
+    <string name="dashboard_section_notifications">Recent notifications</string>
+    <string name="dashboard_section_empty_announcements">No announcements right now</string>
+    <string name="dashboard_section_empty_holidays">No upcoming holidays</string>
+    <string name="dashboard_section_empty_notifications">You\'re all caught up</string>
+    <string name="dashboard_section_error">Couldn\'t load this section</string>
+
+    <!-- Employees -->
+    <string name="employees_title">Employees</string>
+    <string name="employees_count_format">%1$d team members</string>
+    <string name="employees_empty_title">No employees yet</string>
+    <string name="employees_empty_message">Employees you add will show up here. Mock data loads automatically in this Phase 1 build.</string>
+    <string name="employees_error_title">Couldn\'t load employees</string>
+    <string name="employees_error_message">Something went wrong while fetching the team list.</string>
+    <string name="action_retry">Retry</string>
+    <string name="cd_employee_avatar">Employee photo</string>
+
+    <!-- Attendance -->
+    <string name="attendance_title">Attendance</string>
+    <string name="attendance_empty_title">Attendance tracking is coming soon</string>
+    <string name="attendance_empty_message">Check-in / check-out, timesheets and shift management will land in a later phase.</string>
+
+    <!-- Attendance: Today card -->
+    <string name="attendance_today_title">Today\'s Attendance</string>
+    <string name="attendance_missing_checkout_banner_format">You forgot to check out on %1$s</string>
+    <string name="attendance_missing_checkout_action">Submit correction</string>
+
+    <!-- Attendance: check-in / check-out success dialogs -->
+    <string name="attendance_check_in_success_title">✓ Checked In Successfully</string>
+    <string name="attendance_check_in_success_subtitle">Have a productive day!</string>
+    <string name="attendance_check_out_success_title">✓ Checked Out Successfully</string>
+    <string name="attendance_check_out_success_subtitle_format">Total Working Time: %1$s</string>
+    <string name="action_done">Done</string>
+
+    <!-- Attendance: Monthly summary -->
+    <string name="attendance_section_summary">Monthly Summary</string>
+    <string name="attendance_summary_present">Present</string>
+    <string name="attendance_summary_late">Late</string>
+    <string name="attendance_summary_half_day">Half Day</string>
+    <string name="attendance_summary_absent">Absent</string>
+    <string name="attendance_summary_leave">Leave</string>
+    <string name="attendance_summary_wfh">Work From Home</string>
+
+    <!-- Attendance: month navigation (shared by Summary / Calendar / History) -->
+    <string name="attendance_cd_previous_month">Previous month</string>
+    <string name="attendance_cd_next_month">Next month</string>
+
+    <!-- Attendance: Calendar -->
+    <string name="attendance_section_calendar">Attendance Calendar</string>
+
+    <!-- Attendance: History -->
+    <string name="attendance_section_history">Attendance History</string>
+    <string name="attendance_history_column_date">Date</string>
+    <string name="attendance_history_column_checkin">Check-in</string>
+    <string name="attendance_history_column_checkout">Check-out</string>
+    <string name="attendance_history_column_hours">Hours</string>
+    <string name="attendance_history_column_status">Status</string>
+    <string name="attendance_history_empty">No attendance records for this month</string>
+    <string name="attendance_history_error">Couldn\'t load attendance history</string>
+    <string name="attendance_value_placeholder">--</string>
+
+    <!-- Attendance: statuses -->
+    <string name="attendance_status_present">Present</string>
+    <string name="attendance_status_late">Late</string>
+    <string name="attendance_status_half_day">Half Day</string>
+    <string name="attendance_status_absent">Absent</string>
+    <string name="attendance_status_leave">Leave</string>
+    <string name="attendance_status_wfh">Work From Home</string>
+
+    <!-- Attendance: Corrections -->
+    <string name="attendance_section_corrections">Attendance Corrections</string>
+    <string name="attendance_request_correction">Request Correction</string>
+    <string name="attendance_correction_empty">No correction requests yet</string>
+    <string name="attendance_correction_status_pending">Pending</string>
+    <string name="attendance_correction_status_approved">Approved</string>
+    <string name="attendance_correction_status_rejected">Rejected</string>
+
+    <!-- Attendance: Correction dialog -->
+    <string name="attendance_correction_dialog_title">Attendance Correction</string>
+    <string name="attendance_correction_label_date">Date</string>
+    <string name="attendance_correction_label_actual_checkin">Check-in</string>
+    <string name="attendance_correction_label_expected_checkin">Expected</string>
+    <string name="attendance_correction_label_reason">Reason</string>
+    <string name="attendance_correction_hint_reason">e.g. Forgot to check in</string>
+    <string name="attendance_correction_no_checkin">No check-in recorded</string>
+    <string name="attendance_correction_submit">Submit Correction</string>
+    <string name="attendance_correction_error_reason_required">Please explain what needs correcting</string>
+    <string name="attendance_correction_success">Correction request submitted</string>
+    <string name="attendance_correction_meta_format">Check-in %1$s · Expected %2$s</string>
+    <string name="attendance_correction_clear_checkin">No check-in</string>
+    <string-array name="attendance_calendar_weekday_labels">
+        <item>Su</item>
+        <item>Mo</item>
+        <item>Tu</item>
+        <item>We</item>
+        <item>Th</item>
+        <item>Fr</item>
+        <item>Sa</item>
+    </string-array>
+
+    <!-- Profile -->
+    <string name="profile_title">Profile</string>
+    <string name="profile_settings_header">Preferences</string>
+    <string name="profile_dark_mode">Dark mode</string>
+    <string name="profile_dark_mode_desc">Follows your system setting until changed here</string>
+    <string name="profile_about_header">About</string>
+    <string name="profile_app_version_format">Version %1$s</string>
+    <string name="profile_logout">Log out</string>
+    <string name="profile_logout_dialog_title">Log out?</string>
+    <string name="profile_logout_dialog_message">You\'ll need to sign in again to access your HRMS workspace.</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="action_save">Save</string>
+
+    <!-- Profile detail (Phase 6) -->
+    <string name="profile_error_title">Couldn\'t load profile</string>
+    <string name="profile_error_message">Something went wrong loading your profile. Pull to refresh or try again.</string>
+    <string name="profile_edit">Edit Profile</string>
+    <string name="profile_quick_email">Work Email</string>
+    <string name="profile_quick_phone">Phone</string>
+    <string name="profile_quick_location">Office Location</string>
+    <string name="profile_quick_manager">Reporting Manager</string>
+    <string name="profile_quick_joining">Joining Date</string>
+
+    <string name="profile_section_personal">Personal Information</string>
+    <string name="profile_section_employment">Employment Information</string>
+    <string name="profile_section_emergency">Emergency Contact</string>
+    <string name="profile_section_documents">Documents</string>
+
+    <string name="profile_field_dob">Date of Birth</string>
+    <string name="profile_field_gender">Gender</string>
+    <string name="profile_field_phone">Phone</string>
+    <string name="profile_field_email">Email</string>
+    <string name="profile_field_employee_id">Employee ID</string>
+    <string name="profile_field_department">Department</string>
+    <string name="profile_field_designation">Designation</string>
+    <string name="profile_field_manager">Manager</string>
+    <string name="profile_field_joining">Joining Date</string>
+    <string name="profile_field_employment_type">Employment Type</string>
+    <string name="profile_field_location">Office Location</string>
+    <string name="profile_field_emergency_name">Name</string>
+    <string name="profile_field_emergency_relationship">Relationship</string>
+    <string name="profile_field_emergency_phone">Phone</string>
+    <string name="profile_documents_subtitle">View payslips, letters, tax and policy documents</string>
+
+    <!-- Edit Profile -->
+    <string name="edit_profile_title">Edit Profile</string>
+    <string name="edit_profile_saved">Profile updated</string>
+    <string name="edit_profile_error">Couldn\'t save your changes. Please try again.</string>
+    <string name="edit_profile_hint_name">Full name</string>
+    <string name="edit_profile_hint_dob">Date of birth</string>
+    <string name="edit_profile_hint_gender">Gender</string>
+    <string name="edit_profile_hint_phone">Phone number</string>
+    <string name="edit_profile_hint_email">Work email</string>
+    <string name="edit_profile_hint_location">Office location</string>
+    <string name="edit_profile_hint_emergency_name">Emergency contact name</string>
+    <string name="edit_profile_hint_emergency_relationship">Relationship</string>
+    <string name="edit_profile_hint_emergency_phone">Emergency contact phone</string>
+    <string name="edit_profile_err_name">Please enter your name</string>
+    <string name="edit_profile_err_email">Enter a valid email address</string>
+    <string name="edit_profile_err_phone">Enter a valid phone number</string>
+    <string name="edit_profile_err_required">This field is required</string>
+    <string name="edit_profile_cd_back">Back</string>
+
+    <!-- Documents -->
+    <string name="documents_title">Documents</string>
+    <string name="documents_empty_title">No documents yet</string>
+    <string name="documents_empty_message">Your payslips, letters and other documents will appear here.</string>
+    <string name="documents_error_title">Couldn\'t load documents</string>
+    <string name="documents_error_message">Something went wrong. Pull to refresh or try again.</string>
+    <string name="documents_cat_payslips">Payslips</string>
+    <string name="documents_cat_offer">Offer Letter</string>
+    <string name="documents_cat_appointment">Appointment Letter</string>
+    <string name="documents_cat_experience">Experience Letter</string>
+    <string name="documents_cat_tax">Tax Documents</string>
+    <string name="documents_cat_policies">Company Policies</string>
+    <string name="documents_cat_other">Other Documents</string>
+    <string name="documents_meta_format">%1$s · %2$s · %3$s</string>
+    <string name="documents_action_view">View</string>
+    <string name="documents_action_download">Download</string>
+    <string name="documents_action_share">Share</string>
+    <string name="documents_downloaded_format">Saved to %1$s</string>
+    <string name="documents_error_open">Couldn\'t open this document.</string>
+    <string name="documents_error_no_viewer">No app found to open this file.</string>
+    <string name="documents_cd_back">Back</string>
+
+    <!-- Document viewer -->
+    <string name="viewer_error_title">Couldn\'t open document</string>
+    <string name="viewer_error_message">This document couldn\'t be prepared for preview.</string>
+    <string name="viewer_open_external">Open</string>
+
+    <!-- Generic -->
+    <string name="loading_default_message">Loading…</string>
+</resources>

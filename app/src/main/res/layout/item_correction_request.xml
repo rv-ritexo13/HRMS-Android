@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="@dimen/space_sm">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textCorrectionDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAppearance="@style/TextAppearance.HRMS.TitleSmall"
+            android:textColor="?attr/colorOnSurface"
+            tools:text="19 Sep 2026" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipCorrectionStatus"
+            style="@style/Widget.HRMS.Chip.Status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            tools:text="Pending" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textCorrectionReason"
+        style="@style/Widget.HRMS.Text.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xxs"
+        android:ellipsize="end"
+        android:maxLines="2"
+        tools:text="Forgot to check in, worked from 9:15 onward" />
+
+    <TextView
+        android:id="@+id/textCorrectionMeta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xxs"
+        android:textAppearance="@style/TextAppearance.HRMS.LabelSmall"
+        android:textColor="?attr/colorOutline"
+        tools:text="Check-in 10:15 AM · Expected 09:30 AM" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/space_sm"
+        android:background="?attr/colorOutlineVariant" />
+</LinearLayout>

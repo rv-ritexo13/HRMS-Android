@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.HRMS.Card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_md"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="@dimen/avatar_size_md"
+            android:layout_height="@dimen/avatar_size_md"
+            app:cardBackgroundColor="?attr/colorPrimary"
+            app:cardCornerRadius="@dimen/radius_full"
+            app:cardElevation="0dp">
+
+            <TextView
+                android:id="@+id/textAvatarInitials"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/cd_employee_avatar"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.HRMS.LabelLarge"
+                android:textColor="?attr/colorOnPrimary"
+                tools:text="AS" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_md"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textEmployeeName"
+                android:textAppearance="@style/TextAppearance.HRMS.TitleSmall"
+                android:textColor="?attr/colorOnSurface"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="Aditi Sharma" />
+
+            <TextView
+                android:id="@+id/textEmployeeDesignation"
+                style="@style/Widget.HRMS.Text.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_xxs"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="Senior Product Designer · Design" />
+        </LinearLayout>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipStatus"
+            style="@style/Widget.HRMS.Chip.Status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            tools:text="Active" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

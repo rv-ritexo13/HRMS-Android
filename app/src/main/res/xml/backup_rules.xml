@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!--
+       Phase 1 has no user-generated data to back up yet.
+       Add <include>/<exclude> rules here once local persistence is introduced.
+    -->
+</full-backup-content>

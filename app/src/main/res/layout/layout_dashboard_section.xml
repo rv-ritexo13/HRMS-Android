@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/space_sm">
+
+        <ImageView
+            android:id="@+id/imageSectionIcon"
+            android:layout_width="@dimen/icon_size_sm"
+            android:layout_height="@dimen/icon_size_sm"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_announcement"
+            app:tint="?attr/colorOnSurfaceVariant" />
+
+        <TextView
+            android:id="@+id/textSectionTitle"
+            style="@style/Widget.HRMS.Text.SectionHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_sm"
+            android:layout_weight="1"
+            tools:text="Recent announcements" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="56dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerSectionItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progressSection"
+            style="@style/Widget.HRMS.ProgressIndicator"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textSectionEmpty"
+            style="@style/Widget.HRMS.Text.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingVertical="@dimen/space_lg"
+            android:visibility="gone"
+            tools:text="No announcements right now" />
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,13 @@
+# Rename this file to "local.properties" (Android Studio also creates/updates it
+# automatically the first time you open the project) and point it at your local
+# Android SDK installation. This file is machine-specific and must never be
+# committed to version control (it is already listed in .gitignore).
+#
+# Windows example:
+# sdk.dir=C:\\Users\\<you>\\AppData\\Local\\Android\\Sdk
+#
+# macOS example:
+# sdk.dir=/Users/<you>/Library/Android/sdk
+#
+# Linux example:
+# sdk.dir=/home/<you>/Android/Sdk

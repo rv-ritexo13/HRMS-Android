@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/space_sm">
+
+        <TextView
+            android:id="@+id/textHistoryDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAppearance="@style/TextAppearance.HRMS.BodySmall"
+            android:textColor="?attr/colorOnSurface"
+            tools:text="19 Sep" />
+
+        <TextView
+            android:id="@+id/textHistoryCheckIn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.HRMS.BodySmall"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            tools:text="09:28 AM" />
+
+        <TextView
+            android:id="@+id/textHistoryCheckOut"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.HRMS.BodySmall"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            tools:text="06:35 PM" />
+
+        <TextView
+            android:id="@+id/textHistoryHours"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.HRMS.BodySmall"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            tools:text="9h 07m" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipHistoryStatus"
+            style="@style/Widget.HRMS.Chip.Status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:clickable="false"
+            android:focusable="false"
+            android:textSize="10sp"
+            tools:text="Present" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/colorOutlineVariant" />
+</LinearLayout>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboardFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.triotech.hrms.ui.dashboard.DashboardFragment"
+        android:label="@string/nav_home"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/attendanceFragment"
+        android:name="com.triotech.hrms.ui.attendance.AttendanceFragment"
+        android:label="@string/nav_attendance"
+        tools:layout="@layout/fragment_attendance" />
+
+    <fragment
+        android:id="@+id/leaveFragment"
+        android:name="com.triotech.hrms.ui.leave.LeaveFragment"
+        android:label="@string/nav_leave"
+        tools:layout="@layout/fragment_leave">
+        <action
+            android:id="@+id/action_leave_to_applyLeave"
+            app:destination="@id/applyLeaveFragment" />
+        <action
+            android:id="@+id/action_leave_to_leaveDetail"
+            app:destination="@id/leaveDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/applyLeaveFragment"
+        android:name="com.triotech.hrms.ui.leave.ApplyLeaveFragment"
+        android:label="@string/apply_leave_title"
+        tools:layout="@layout/fragment_apply_leave" />
+
+    <fragment
+        android:id="@+id/leaveDetailFragment"
+        android:name="com.triotech.hrms.ui.leave.LeaveDetailFragment"
+        android:label="@string/leave_detail_title"
+        tools:layout="@layout/fragment_leave_detail">
+        <argument
+            android:name="leaveRequestId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/salaryFragment"
+        android:name="com.triotech.hrms.ui.salary.SalaryFragment"
+        android:label="@string/nav_salary"
+        tools:layout="@layout/fragment_salary">
+        <action
+            android:id="@+id/action_salary_to_payslip"
+            app:destination="@id/payslipFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/payslipFragment"
+        android:name="com.triotech.hrms.ui.salary.PayslipFragment"
+        android:label="@string/payslip_title"
+        tools:layout="@layout/fragment_payslip">
+        <argument
+            android:name="monthKey"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.triotech.hrms.ui.profile.ProfileFragment"
+        android:label="@string/nav_profile"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profile_to_editProfile"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_profile_to_documents"
+            app:destination="@id/documentsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.triotech.hrms.ui.profile.EditProfileFragment"
+        android:label="@string/edit_profile_title"
+        tools:layout="@layout/fragment_edit_profile" />
+
+    <fragment
+        android:id="@+id/documentsFragment"
+        android:name="com.triotech.hrms.ui.documents.DocumentsFragment"
+        android:label="@string/documents_title"
+        tools:layout="@layout/fragment_documents">
+        <action
+            android:id="@+id/action_documents_to_viewer"
+            app:destination="@id/documentViewerFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/documentViewerFragment"
+        android:name="com.triotech.hrms.ui.documents.DocumentViewerFragment"
+        tools:layout="@layout/fragment_document_viewer">
+        <argument
+            android:name="documentId"
+            app:argType="string" />
+    </fragment>
+</navigation>
