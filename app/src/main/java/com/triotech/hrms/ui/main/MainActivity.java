@@ -54,7 +54,12 @@ public class MainActivity extends AppCompatActivity {
                     || id == R.id.documentsFragment
                     || id == R.id.documentViewerFragment
                     || id == R.id.applyLeaveFragment
-                    || id == R.id.leaveDetailFragment;
+                    || id == R.id.leaveDetailFragment
+                    || id == R.id.expensesFragment
+                    || id == R.id.addExpenseFragment
+                    || id == R.id.expenseDetailFragment
+                    || id == R.id.expenseReportsFragment
+                    || id == R.id.expenseReportDetailFragment;
             binding.bottomNavigation.setVisibility(fullScreen ? View.GONE : View.VISIBLE);
         });
     }

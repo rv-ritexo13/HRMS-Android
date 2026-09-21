@@ -2,15 +2,22 @@ package com.triotech.hrms.ui.dashboard;
 
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AutoCompleteTextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.ListAdapter;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import com.triotech.hrms.R;
@@ -21,14 +28,13 @@ import com.triotech.hrms.core.util.Resource;
 import com.triotech.hrms.core.util.SessionManager;
 import com.triotech.hrms.data.model.AttendanceRecord;
 import com.triotech.hrms.data.model.AuthUser;
-import com.triotech.hrms.data.model.DashboardSummary;
 import com.triotech.hrms.data.model.NotificationItem;
 import com.triotech.hrms.data.repository.AttendanceRepository;
 import com.triotech.hrms.data.repository.DashboardContentRepository;
 import com.triotech.hrms.databinding.FragmentDashboardBinding;
-import com.triotech.hrms.databinding.ItemStatCardBinding;
 import com.triotech.hrms.databinding.LayoutDashboardSectionBinding;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -48,6 +54,8 @@ public class DashboardFragment extends BaseFragment<FragmentDashboardBinding> {
     private final HolidayAdapter holidayAdapter = new HolidayAdapter();
     private final NotificationAdapter notificationAdapter = new NotificationAdapter();
 
+    @Nullable private List<FeatureSearchTarget> searchTargets;
+
     @Override
     protected FragmentDashboardBinding inflateBinding(
             @NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
@@ -64,14 +72,15 @@ public class DashboardFragment extends BaseFragment<FragmentDashboardBinding> {
 
         bindHeader();
         setupSections();
-        setupMiniCards();
+        setupSearch();
 
         getBinding().buttonCheckIn.setOnClickListener(v -> performCheckIn());
         getBinding().buttonCheckOut.setOnClickListener(v -> performCheckOut());
         getBinding().buttonNotifications.setOnClickListener(v -> showSnackbar("Coming in a later phase"));
+        getBinding().cardExpenses.setOnClickListener(v ->
+                NavHostFragment.findNavController(this).navigate(R.id.action_dashboard_to_expenses));
 
         viewModel.getAttendance().observe(getViewLifecycleOwner(), this::renderAttendance);
-        viewModel.getSummary().observe(getViewLifecycleOwner(), this::renderSummary);
         viewModel.getAnnouncements().observe(getViewLifecycleOwner(), resource -> renderSection(
                 getBinding().sectionAnnouncements, announcementAdapter, resource,
                 getString(R.string.dashboard_section_empty_announcements)));
@@ -105,6 +114,110 @@ public class DashboardFragment extends BaseFragment<FragmentDashboardBinding> {
                 R.string.dashboard_section_notifications, notificationAdapter);
     }
 
+    // ===================== Feature search =====================
+
+    private void setupSearch() {
+        searchTargets = buildSearchTargets();
+        FeatureSearchAdapter adapter = new FeatureSearchAdapter(requireContext(), searchTargets);
+        AutoCompleteTextView input = getBinding().inputSearch;
+        input.setAdapter(adapter);
+
+        input.setOnItemClickListener((parent, view, position, id) -> {
+            FeatureSearchTarget target = adapter.getItem(position);
+            if (target != null) {
+                openFeature(target);
+            }
+        });
+
+        input.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                FeatureSearchTarget best = bestMatch(input.getText().toString());
+                if (best != null) {
+                    openFeature(best);
+                }
+                return true;
+            }
+            return false;
+        });
+
+        input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                getBinding().buttonClearSearch.setVisibility(s.length() > 0 ? View.VISIBLE : View.GONE);
+            }
+        });
+
+        getBinding().buttonClearSearch.setOnClickListener(v -> dismissSearch());
+    }
+
+    @NonNull
+    private List<FeatureSearchTarget> buildSearchTargets() {
+        return Arrays.asList(
+                new FeatureSearchTarget(R.id.attendanceFragment, R.drawable.ic_attendance,
+                        R.string.nav_attendance, R.string.search_sub_attendance,
+                        "attendance check in check out clock calendar present absent late half day correction regularize working hours"),
+                new FeatureSearchTarget(R.id.leaveFragment, R.drawable.ic_holiday,
+                        R.string.nav_leave, R.string.search_sub_leave,
+                        "leave apply vacation time off holiday balance casual sick earned days"),
+                new FeatureSearchTarget(R.id.salaryFragment, R.drawable.ic_salary,
+                        R.string.nav_salary, R.string.search_sub_salary,
+                        "salary pay payslip payslips ctc earnings tax deductions payroll money income compensation net gross"),
+                new FeatureSearchTarget(R.id.expensesFragment, R.drawable.ic_salary,
+                        R.string.expenses_title, R.string.search_sub_expenses,
+                        "expenses expense reimbursement reimburse claim claims bills receipts travel"),
+                new FeatureSearchTarget(R.id.performanceFragment, R.drawable.ic_bar_chart,
+                        R.string.performance_title, R.string.search_sub_performance,
+                        "performance review reviews appraisal goals goal objectives kra kpi rating okr feedback"),
+                new FeatureSearchTarget(R.id.documentsFragment, R.drawable.ic_folder,
+                        R.string.documents_title, R.string.search_sub_documents,
+                        "documents document payslip pdf offer letter appointment experience form 16 tax policy files download certificate"),
+                new FeatureSearchTarget(R.id.profileFragment, R.drawable.ic_profile,
+                        R.string.nav_profile, R.string.search_sub_profile,
+                        "profile account personal information emergency contact settings preferences dark mode logout edit details"),
+                new FeatureSearchTarget(R.id.dashboardFragment, R.drawable.ic_home,
+                        R.string.nav_home, R.string.search_sub_home,
+                        "home dashboard overview announcements holidays notifications"));
+    }
+
+    @Nullable
+    private FeatureSearchTarget bestMatch(@NonNull String rawQuery) {
+        String query = rawQuery.trim().toLowerCase(Locale.getDefault());
+        if (query.isEmpty() || searchTargets == null) {
+            return null;
+        }
+        for (FeatureSearchTarget target : searchTargets) {
+            if (target.matches(query)) {
+                return target;
+            }
+        }
+        return null;
+    }
+
+    private void openFeature(@NonNull FeatureSearchTarget target) {
+        dismissSearch();
+        NavController nav = NavHostFragment.findNavController(this);
+        NavDestination current = nav.getCurrentDestination();
+        if (current != null && current.getId() == target.getDestinationId()) {
+            return;
+        }
+        nav.navigate(target.getDestinationId());
+    }
+
+    private void dismissSearch() {
+        AutoCompleteTextView input = getBinding().inputSearch;
+        input.dismissDropDown();
+        input.setText("");
+        input.clearFocus();
+    }
+
     private void setupSection(
             @NonNull LayoutDashboardSectionBinding section,
             int iconRes,
@@ -114,23 +227,6 @@ public class DashboardFragment extends BaseFragment<FragmentDashboardBinding> {
         section.textSectionTitle.setText(titleRes);
         section.recyclerSectionItems.setLayoutManager(new LinearLayoutManager(requireContext()));
         section.recyclerSectionItems.setAdapter(adapter);
-    }
-
-    private void setupMiniCards() {
-        setupMiniCard(getBinding().cardLeaveBalance.getRoot(), R.drawable.ic_event_available,
-                R.string.dashboard_mini_leave_balance);
-        setupMiniCard(getBinding().cardSalary.getRoot(), R.drawable.ic_salary, R.string.dashboard_mini_salary);
-        setupMiniCard(getBinding().cardPendingTasks.getRoot(), R.drawable.ic_task,
-                R.string.dashboard_mini_pending_tasks);
-        setupMiniCard(getBinding().cardUpcomingMeeting.getRoot(), R.drawable.ic_meeting,
-                R.string.dashboard_mini_upcoming_meeting);
-    }
-
-    private void setupMiniCard(@NonNull View cardRoot, int iconRes, int labelRes) {
-        ItemStatCardBinding card = ItemStatCardBinding.bind(cardRoot);
-        card.imageStatIcon.setImageResource(iconRes);
-        card.textStatLabel.setText(labelRes);
-        card.textStatValue.setText("—");
     }
 
     private void performCheckIn() {
@@ -213,19 +309,6 @@ public class DashboardFragment extends BaseFragment<FragmentDashboardBinding> {
         getBinding().chipAttendanceStatus.setTextColor(ContextCompat.getColor(requireContext(), textColorRes));
         getBinding().chipAttendanceStatus.setChipBackgroundColor(
                 ColorStateList.valueOf(ContextCompat.getColor(requireContext(), bgColorRes)));
-    }
-
-    private void renderSummary(@NonNull Resource<DashboardSummary> resource) {
-        if (!resource.isSuccess() || resource.data == null) {
-            return;
-        }
-        DashboardSummary summary = resource.data;
-        getBinding().cardLeaveBalance.textStatValue.setText(
-                getString(R.string.dashboard_mini_leave_balance_format, summary.getLeaveBalanceDays()));
-        getBinding().cardSalary.textStatValue.setText(summary.getSalaryLabel());
-        getBinding().cardPendingTasks.textStatValue.setText(String.valueOf(summary.getPendingTasksCount()));
-        getBinding().cardUpcomingMeeting.textStatValue.setText(summary.getUpcomingMeetingTitle());
-        getBinding().cardUpcomingMeeting.textStatLabel.setText(summary.getUpcomingMeetingTimeLabel());
     }
 
     private <T> void renderSection(

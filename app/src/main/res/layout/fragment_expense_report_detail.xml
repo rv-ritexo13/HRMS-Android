@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        style="@style/Widget.HRMS.Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationContentDescription="@string/expense_reports_cd_back"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:title="@string/expense_report_detail_title" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/contentScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/space_xl">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- ===== Summary ===== -->
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.HRMS.Card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_lg"
+                    android:layout_marginTop="@dimen/space_lg">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textReportMonth"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.HRMS.TitleLarge"
+                            android:textColor="?attr/colorOnSurface"
+                            tools:text="September 2026" />
+
+                        <TextView
+                            style="@style/Widget.HRMS.Text.Caption"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_md"
+                            android:text="@string/expense_report_total_label" />
+
+                        <TextView
+                            android:id="@+id/textReportTotal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_xxs"
+                            android:textAppearance="@style/TextAppearance.HRMS.HeadlineSmall"
+                            android:textColor="?attr/colorPrimary"
+                            tools:text="₹20,150" />
+
+                        <TextView
+                            android:id="@+id/textReportItemCount"
+                            style="@style/Widget.HRMS.Text.Caption"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_xxs"
+                            tools:text="5 expenses" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/stroke_width_thin"
+                            android:layout_marginVertical="@dimen/space_md"
+                            android:background="?attr/colorOutline" />
+
+                        <TextView
+                            android:id="@+id/textReportBreakdown"
+                            style="@style/Widget.HRMS.Text.Caption"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:text="1 Submitted · 1 Approved · 1 Paid · 1 Rejected · 1 Draft" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- ===== Line items ===== -->
+                <TextView
+                    style="@style/Widget.HRMS.Text.SectionHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_lg"
+                    android:layout_marginTop="@dimen/space_xl"
+                    android:layout_marginBottom="@dimen/space_sm"
+                    android:text="@string/expense_report_section_items" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerReportExpenses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never"
+                    android:paddingHorizontal="@dimen/space_lg"
+                    tools:listitem="@layout/item_expense" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <com.triotech.hrms.ui.components.LoadingView
+            android:id="@+id/loadingView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <com.triotech.hrms.ui.components.ErrorView
+            android:id="@+id/errorView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</LinearLayout>

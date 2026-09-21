@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.HRMS.Card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_sm">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textReviewCycle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="@style/TextAppearance.HRMS.TitleSmall"
+                android:textColor="?attr/colorOnSurface"
+                tools:text="H1 2026 Appraisal" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipReviewStatus"
+                style="@style/Widget.HRMS.Chip.Status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_sm"
+                android:clickable="false"
+                android:focusable="false"
+                tools:text="Completed" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textReviewPeriod"
+            style="@style/Widget.HRMS.Text.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xxs"
+            tools:text="Jan 2026 - Jun 2026" />
+
+        <TextView
+            android:id="@+id/textReviewReviewer"
+            style="@style/Widget.HRMS.Text.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Reviewer: Anita Deshmukh" />
+
+        <TextView
+            android:id="@+id/textReviewRating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xxs"
+            android:textAppearance="@style/TextAppearance.HRMS.BodyMedium"
+            android:textColor="?attr/colorPrimary"
+            tools:text="Rating: 4.3 / 5" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

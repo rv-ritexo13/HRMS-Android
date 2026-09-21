@@ -9,8 +9,10 @@ import com.triotech.hrms.data.repository.AuthRepository;
 import com.triotech.hrms.data.repository.DashboardContentRepository;
 import com.triotech.hrms.data.repository.DbProfileRepository;
 import com.triotech.hrms.data.repository.DbSalaryRepository;
+import com.triotech.hrms.data.repository.DbExpenseRepository;
 import com.triotech.hrms.data.repository.DocumentRepository;
 import com.triotech.hrms.data.repository.EmployeeRepository;
+import com.triotech.hrms.data.repository.ExpenseRepository;
 import com.triotech.hrms.data.repository.FakeAttendanceRepository;
 import com.triotech.hrms.data.repository.FakeDashboardContentRepository;
 import com.triotech.hrms.data.repository.DbAuthRepository;
@@ -18,6 +20,8 @@ import com.triotech.hrms.data.repository.DbLeaveRepository;
 import com.triotech.hrms.data.repository.FakeEmployeeRepository;
 import com.triotech.hrms.data.repository.LeaveRepository;
 import com.triotech.hrms.data.repository.MockDocumentRepository;
+import com.triotech.hrms.data.repository.MockPerformanceRepository;
+import com.triotech.hrms.data.repository.PerformanceRepository;
 import com.triotech.hrms.data.repository.ProfileRepository;
 import com.triotech.hrms.data.repository.SalaryRepository;
 
@@ -43,7 +47,9 @@ public final class ServiceLocator {
     private final SalaryRepository salaryRepository;
     private final ProfileRepository profileRepository;
     private final DocumentRepository documentRepository;
+    private final PerformanceRepository performanceRepository;
     private final LeaveRepository leaveRepository;
+    private final ExpenseRepository expenseRepository;
 
     private ServiceLocator() {
         this.employeeRepository = new FakeEmployeeRepository();
@@ -53,7 +59,9 @@ public final class ServiceLocator {
         this.salaryRepository = new DbSalaryRepository(requireContext());
         this.profileRepository = new DbProfileRepository(requireContext());
         this.documentRepository = new MockDocumentRepository();
+        this.performanceRepository = new MockPerformanceRepository();
         this.leaveRepository = new DbLeaveRepository(requireContext());
+        this.expenseRepository = new DbExpenseRepository(requireContext());
     }
 
     /**
@@ -113,8 +121,18 @@ public final class ServiceLocator {
     }
 
     @NonNull
+    public PerformanceRepository getPerformanceRepository() {
+        return performanceRepository;
+    }
+
+    @NonNull
     public LeaveRepository getLeaveRepository() {
         return leaveRepository;
+    }
+
+    @NonNull
+    public ExpenseRepository getExpenseRepository() {
+        return expenseRepository;
     }
 
     @NonNull
