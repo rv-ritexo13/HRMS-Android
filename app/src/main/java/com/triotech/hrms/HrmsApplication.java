@@ -24,6 +24,7 @@ public class HrmsApplication extends Application {
 
         // Verify the Supabase connection at startup (anon key + reachability).
         if (SupabaseClient.isConfigured()) {
+            SupabaseClient.getInstance().init(this);
             SupabaseClient.getInstance().checkConnectivity(connected ->
                     Log.i("HrmsApplication", "Supabase " + SupabaseClient.getBaseUrl()
                             + " reachable=" + connected));
