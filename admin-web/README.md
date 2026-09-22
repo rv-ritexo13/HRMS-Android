@@ -41,12 +41,17 @@ Only accounts flagged in `public.admins` can use the dashboard — it calls the
 - So even though the anon key is public, a non-admin session cannot read or edit
   anyone else's data.
 
+## Creating employees
+
+The Employees tab has an **+ Add** button. It creates a real login account +
+profile via the `create-employee` Supabase Edge Function
+(`supabase/functions/create-employee/`), which runs the service_role key
+server-side — the browser never sees it, and the function refuses anyone who
+isn't an admin. Give the new hire the temporary password you set; they log into
+the mobile app with it.
+
 ## Known limits (first version)
 
-- **Creating new employee login accounts** isn't done here yet — that needs the
-  Supabase **service_role** key (must stay server-side), so it belongs in a
-  Supabase Edge Function, not this browser app. Editing existing employee
-  profiles works.
 - There is no `attendance` table yet, so attendance isn't an admin tab.
 - Config lives in `config.js`. To point at another project, edit the URL + anon
   key there.

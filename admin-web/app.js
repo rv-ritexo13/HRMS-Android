@@ -36,7 +36,15 @@ const ENTITIES = {
       { k: "work_email", label: "Email" }, { k: "phone", label: "Phone" },
     ],
     search: ["employee_id", "full_name", "department", "designation", "work_email"],
-    canAdd: false, canDelete: false, canEdit: true,
+    canAdd: true, canDelete: false, canEdit: true,
+    // Creating an employee also creates a login account -> goes through the
+    // create-employee Edge Function (service_role, server-side), not a table insert.
+    createFn: "create-employee",
+    addFields: [
+      { k: "employee_id", label: "Employee ID" }, { k: "full_name", label: "Full name" },
+      { k: "email", label: "Login email" }, { k: "password", label: "Temporary password" },
+      { k: "department", label: "Department" }, { k: "designation", label: "Designation" },
+    ],
     fields: [
       { k: "full_name", label: "Full name" }, { k: "department", label: "Department" },
       { k: "designation", label: "Designation" }, { k: "reporting_manager", label: "Manager" },
@@ -277,7 +285,8 @@ function openModal(row) {
   modalRow = row;
   $("modalTitle").textContent = (row ? "Edit " : "Add ") + ent.title.replace(/s$/, "");
   const form = $("modalForm");
-  form.innerHTML = ent.fields.map((f) => {
+  const fields = !row && ent.addFields ? ent.addFields : ent.fields;
+  form.innerHTML = fields.map((f) => {
     const v = row ? (row[f.k] ?? "") : "";
     if (f.type === "textarea") return `<label>${esc(f.label)}<textarea data-k="${f.k}" rows="3">${esc(v)}</textarea></label>`;
     if (f.type === "checkbox") return `<label style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" data-k="${f.k}" ${v ? "checked" : ""}/> ${esc(f.label)}</label>`;
@@ -291,13 +300,18 @@ $("modalSave").addEventListener("click", saveModal);
 
 async function saveModal() {
   const ent = ENTITIES[currentKey];
+  const activeFields = !modalRow && ent.addFields ? ent.addFields : ent.fields;
   const patch = {};
   $("modalForm").querySelectorAll("[data-k]").forEach((el) => {
-    const f = ent.fields.find((x) => x.k === el.dataset.k);
+    const f = activeFields.find((x) => x.k === el.dataset.k);
     patch[f.k] = f.type === "number" ? Number(el.value || 0) : f.type === "checkbox" ? el.checked : el.value;
   });
   let error;
-  if (modalRow) {
+  if (!modalRow && ent.createFn) {
+    // Add via Edge Function (e.g. create-employee: makes the auth account + profile).
+    const { data, error: fnErr } = await sb.functions.invoke(ent.createFn, { body: patch });
+    error = fnErr || (data && data.error ? { message: data.error } : null);
+  } else if (modalRow) {
     ({ error } = await sb.from(ent.table).update(patch).eq(ent.pk, modalRow[ent.pk]));
   } else {
     if (ent.idPrefix && !patch[ent.pk]) patch[ent.pk] = ent.idPrefix + Date.now();
