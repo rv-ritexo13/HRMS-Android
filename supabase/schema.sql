@@ -354,3 +354,67 @@ insert into public.payslips (month_key,year,month,employee_id,employee_name,depa
     ('2026-03',2026,3,'EMP001','Rahul Verma','Engineering','Software Engineer',41000,16400,20500,4100,5100,200,700,public.millis(date '2026-03-31'),1,'e0000000-0000-4000-8000-000000000001'),
     ('2026-02',2026,2,'EMP001','Rahul Verma','Engineering','Software Engineer',40250,16100,20125,4025,5100,200,700,public.millis(date '2026-02-28'),1,'e0000000-0000-4000-8000-000000000001')
 on conflict (month_key) do nothing;
+
+-- =====================================================================
+-- Attendance (per-day punches with optional GPS) + corrections
+-- =====================================================================
+create table if not exists public.attendance (
+    id                 text primary key,
+    user_id            uuid references auth.users(id) on delete cascade default auth.uid(),
+    date_key           text not null,
+    date_millis        bigint not null,
+    status             text not null,
+    check_in_millis    bigint,
+    check_out_millis   bigint,
+    check_in_lat       double precision,
+    check_in_lng       double precision,
+    check_in_address   text,
+    check_out_lat      double precision,
+    check_out_lng      double precision,
+    check_out_address  text,
+    unique (user_id, date_key)
+);
+
+create table if not exists public.attendance_corrections (
+    id                        text primary key,
+    user_id                   uuid references auth.users(id) on delete cascade default auth.uid(),
+    date_key                  text not null,
+    date_millis               bigint not null,
+    actual_check_in_millis    bigint,
+    expected_check_in_millis  bigint,
+    reason                    text not null,
+    status                    text not null,
+    created_millis            bigint not null
+);
+
+do $$
+declare t text;
+begin
+  foreach t in array array['attendance','attendance_corrections'] loop
+    execute format('alter table public.%I enable row level security;', t);
+    execute format('drop policy if exists %I on public.%I;', t||'_owner_admin', t);
+    execute format($f$create policy %I on public.%I for all to authenticated
+        using (public.is_admin() or user_id = auth.uid())
+        with check (public.is_admin() or user_id = auth.uid());$f$, t||'_owner_admin', t);
+  end loop;
+end $$;
+
+-- Past weekdays (Aug 1 - Sep 21 2026) as PRESENT for the demo employee; today is
+-- intentionally left empty so the app can perform a live check-in.
+insert into public.attendance (id,user_id,date_key,date_millis,status,check_in_millis,check_out_millis)
+select
+  'e0000000-0000-4000-8000-000000000001'||'-'||to_char(d,'YYYY-MM-DD'),
+  'e0000000-0000-4000-8000-000000000001',
+  to_char(d,'YYYY-MM-DD'),
+  (extract(epoch from d)*1000)::bigint,
+  'PRESENT',
+  (extract(epoch from d + time '09:15')*1000)::bigint,
+  (extract(epoch from d + time '18:05')*1000)::bigint
+from generate_series(date '2026-08-01', date '2026-09-21', interval '1 day') g(d)
+where extract(isodow from d) < 6
+on conflict (user_id,date_key) do nothing;
+
+insert into public.attendance_corrections (id,user_id,date_key,date_millis,actual_check_in_millis,expected_check_in_millis,reason,status,created_millis) values
+ ('AC-seed-1','e0000000-0000-4000-8000-000000000001','2026-09-16',(extract(epoch from date '2026-09-16')*1000)::bigint,(extract(epoch from date '2026-09-16' + time '10:05')*1000)::bigint,(extract(epoch from date '2026-09-16' + time '09:30')*1000)::bigint,'Traffic delay on the way in','APPROVED',(extract(epoch from date '2026-09-16')*1000)::bigint),
+ ('AC-seed-2','e0000000-0000-4000-8000-000000000001','2026-09-19',(extract(epoch from date '2026-09-19')*1000)::bigint,null,(extract(epoch from date '2026-09-19' + time '09:30')*1000)::bigint,'Forgot to check in, worked from 9:15','REJECTED',(extract(epoch from date '2026-09-19')*1000)::bigint)
+on conflict (id) do nothing;
