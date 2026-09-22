@@ -1,13 +1,11 @@
 package com.triotech.hrms.data.repository;
 
-import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.triotech.hrms.core.network.SupabaseClient;
 import com.triotech.hrms.core.util.Resource;
-import com.triotech.hrms.core.util.SessionManager;
 import com.triotech.hrms.data.model.Expense;
 import com.triotech.hrms.data.model.ExpenseCategory;
 import com.triotech.hrms.data.model.ExpenseStatus;
@@ -26,24 +24,14 @@ public class SupabaseExpenseRepository implements ExpenseRepository {
 
     private static final String TABLE = "expenses";
 
-    private final Context appContext;
     private final SupabaseClient client = SupabaseClient.getInstance();
-
-    public SupabaseExpenseRepository(@NonNull Context context) {
-        this.appContext = context.getApplicationContext();
-    }
-
-    @Nullable
-    private String token() {
-        return SessionManager.getAccessToken(appContext);
-    }
 
     @NonNull
     @Override
     public LiveData<Resource<List<Expense>>> observeExpenses() {
         MutableLiveData<Resource<List<Expense>>> live = new MutableLiveData<>();
         live.setValue(Resource.loading());
-        client.get(TABLE + "?select=*&order=expense_date_millis.desc", token(), resp -> {
+        client.get(TABLE + "?select=*&order=expense_date_millis.desc", resp -> {
             if (!resp.isSuccess()) {
                 live.setValue(Resource.error("Couldn't load your expenses."));
                 return;
@@ -59,7 +47,7 @@ public class SupabaseExpenseRepository implements ExpenseRepository {
     public LiveData<Resource<Expense>> observeExpense(@NonNull String id) {
         MutableLiveData<Resource<Expense>> live = new MutableLiveData<>();
         live.setValue(Resource.loading());
-        client.get(TABLE + "?select=*&id=eq." + enc(id), token(), resp -> {
+        client.get(TABLE + "?select=*&id=eq." + enc(id), resp -> {
             if (!resp.isSuccess()) {
                 live.setValue(Resource.error("Couldn't load this expense."));
                 return;
@@ -75,7 +63,7 @@ public class SupabaseExpenseRepository implements ExpenseRepository {
     public LiveData<Resource<Expense>> saveExpense(@NonNull Expense expense) {
         MutableLiveData<Resource<Expense>> live = new MutableLiveData<>();
         live.setValue(Resource.loading());
-        client.post(TABLE, toJson(expense), token(), resp ->
+        client.post(TABLE, toJson(expense), resp ->
                 live.setValue(resp.isSuccess() ? Resource.success(expense)
                         : Resource.error("Couldn't save your expense.")));
         return live;
@@ -86,7 +74,7 @@ public class SupabaseExpenseRepository implements ExpenseRepository {
     public LiveData<Resource<Expense>> updateExpense(@NonNull Expense expense) {
         MutableLiveData<Resource<Expense>> live = new MutableLiveData<>();
         live.setValue(Resource.loading());
-        client.patch(TABLE + "?id=eq." + enc(expense.getId()), toJson(expense), token(), resp ->
+        client.patch(TABLE + "?id=eq." + enc(expense.getId()), toJson(expense), resp ->
                 live.setValue(resp.isSuccess() ? Resource.success(expense)
                         : Resource.error("Couldn't update your expense.")));
         return live;
@@ -99,7 +87,7 @@ public class SupabaseExpenseRepository implements ExpenseRepository {
         live.setValue(Resource.loading());
         String body = "{\"status\":\"" + ExpenseStatus.SUBMITTED.key() + "\"}";
         // Guard so only a DRAFT can be submitted — the filter returns 0 rows otherwise.
-        client.patch(TABLE + "?id=eq." + enc(id) + "&status=eq." + ExpenseStatus.DRAFT.key(), body, token(), resp -> {
+        client.patch(TABLE + "?id=eq." + enc(id) + "&status=eq." + ExpenseStatus.DRAFT.key(), body, resp -> {
             if (!resp.isSuccess()) {
                 live.setValue(Resource.error("Couldn't submit this expense."));
                 return;

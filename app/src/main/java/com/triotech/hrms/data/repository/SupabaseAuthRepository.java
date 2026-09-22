@@ -1,12 +1,10 @@
 package com.triotech.hrms.data.repository;
 
-import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.triotech.hrms.core.network.SupabaseClient;
 import com.triotech.hrms.core.util.Resource;
-import com.triotech.hrms.core.util.SessionManager;
 import com.triotech.hrms.data.model.AuthUser;
 import com.triotech.hrms.data.model.UserRole;
 import java.util.Locale;
@@ -27,12 +25,7 @@ public class SupabaseAuthRepository implements AuthRepository {
 
     private static final String INVALID = "Invalid Employee ID or password";
 
-    private final Context appContext;
     private final SupabaseClient client = SupabaseClient.getInstance();
-
-    public SupabaseAuthRepository(@NonNull Context context) {
-        this.appContext = context.getApplicationContext();
-    }
 
     @NonNull
     @Override
@@ -50,18 +43,14 @@ public class SupabaseAuthRepository implements AuthRepository {
                 return;
             }
             try {
+                // The client has already stored the access + refresh tokens from a
+                // successful sign-in, so PostgREST calls below are authorized.
                 JSONObject body = new JSONObject(resp.body);
-                String accessToken = body.optString("access_token", "");
-                if (accessToken.isEmpty()) {
-                    result.setValue(Resource.error(INVALID));
-                    return;
-                }
-                SessionManager.setAccessToken(appContext, accessToken);
                 String metaName = body.optJSONObject("user") != null
                         && body.getJSONObject("user").optJSONObject("user_metadata") != null
                         ? body.getJSONObject("user").getJSONObject("user_metadata").optString("name", "")
                         : "";
-                loadProfile(employeeId, metaName, accessToken, result);
+                loadProfile(employeeId, metaName, result);
             } catch (Exception e) {
                 result.setValue(Resource.error("Couldn't sign you in. Please try again."));
             }
@@ -71,8 +60,8 @@ public class SupabaseAuthRepository implements AuthRepository {
 
     /** Fetches the signed-in user's profile row to fill name/department/designation. */
     private void loadProfile(@NonNull String employeeId, @NonNull String fallbackName,
-            @NonNull String accessToken, @NonNull MutableLiveData<Resource<AuthUser>> result) {
-        client.get("profiles?select=employee_id,full_name,department,designation&limit=1", accessToken, resp -> {
+            @NonNull MutableLiveData<Resource<AuthUser>> result) {
+        client.get("profiles?select=employee_id,full_name,department,designation&limit=1", resp -> {
             String id = employeeId;
             String name = fallbackName.isEmpty() ? employeeId : fallbackName;
             String department = "General";
