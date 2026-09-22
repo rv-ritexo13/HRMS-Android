@@ -1,8 +1,10 @@
 package com.triotech.hrms;
 
 import android.app.Application;
+import android.util.Log;
 import androidx.appcompat.app.AppCompatDelegate;
 import com.triotech.hrms.core.di.ServiceLocator;
+import com.triotech.hrms.core.network.SupabaseClient;
 import com.triotech.hrms.core.util.ThemePreferences;
 
 /**
@@ -19,5 +21,14 @@ public class HrmsApplication extends Application {
         super.onCreate();
         AppCompatDelegate.setDefaultNightMode(ThemePreferences.getSavedNightMode(this));
         ServiceLocator.init(this);
+
+        // Verify the Supabase connection at startup (anon key + reachability).
+        if (SupabaseClient.isConfigured()) {
+            SupabaseClient.getInstance().checkConnectivity(connected ->
+                    Log.i("HrmsApplication", "Supabase " + SupabaseClient.getBaseUrl()
+                            + " reachable=" + connected));
+        } else {
+            Log.w("HrmsApplication", "Supabase not configured (missing URL or anon key).");
+        }
     }
 }

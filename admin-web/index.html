@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HRMS Admin</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Login -->
+  <div id="loginView" class="login-wrap">
+    <form id="loginForm" class="login-card">
+      <div class="brand">HRMS <span>Admin</span></div>
+      <p class="muted">Sign in with an admin account</p>
+      <label>Email<input id="email" type="email" value="admin@hrms.app" autocomplete="username" required /></label>
+      <label>Password<input id="password" type="password" value="" autocomplete="current-password" required /></label>
+      <button type="submit" id="loginBtn">Sign in</button>
+      <div id="loginError" class="error"></div>
+    </form>
+  </div>
+
+  <!-- App -->
+  <div id="appView" class="app hidden">
+    <aside class="sidebar">
+      <div class="brand">HRMS <span>Admin</span></div>
+      <nav id="nav"></nav>
+      <div class="sidebar-foot">
+        <div id="whoami" class="muted"></div>
+        <button id="logoutBtn" class="ghost">Log out</button>
+      </div>
+    </aside>
+    <main class="content">
+      <div class="content-head">
+        <h1 id="pageTitle">Employees</h1>
+        <div class="head-actions">
+          <input id="search" class="search" placeholder="Search…" />
+          <button id="addBtn" class="primary hidden">+ Add</button>
+          <button id="refreshBtn" class="ghost">Refresh</button>
+        </div>
+      </div>
+      <div id="banner" class="banner hidden"></div>
+      <div id="tableWrap" class="table-wrap"></div>
+    </main>
+  </div>
+
+  <!-- Edit modal -->
+  <div id="modal" class="modal-backdrop hidden">
+    <div class="modal">
+      <h2 id="modalTitle">Edit</h2>
+      <form id="modalForm" class="modal-form"></form>
+      <div class="modal-actions">
+        <button id="modalCancel" class="ghost" type="button">Cancel</button>
+        <button id="modalSave" class="primary" type="button">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
