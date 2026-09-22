@@ -1,5 +1,6 @@
 package com.triotech.hrms.ui.dashboard;
 
+import android.Manifest;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -24,6 +27,7 @@ import com.triotech.hrms.R;
 import com.triotech.hrms.core.base.BaseFragment;
 import com.triotech.hrms.core.di.ServiceLocator;
 import com.triotech.hrms.core.di.ViewModelFactory;
+import com.triotech.hrms.core.util.LocationUtils;
 import com.triotech.hrms.core.util.Resource;
 import com.triotech.hrms.core.util.SessionManager;
 import com.triotech.hrms.data.model.AttendanceRecord;
@@ -56,6 +60,10 @@ public class DashboardFragment extends BaseFragment<FragmentDashboardBinding> {
 
     @Nullable private List<FeatureSearchTarget> searchTargets;
 
+    // Registered at construction. Check-in proceeds regardless of the permission result.
+    private final ActivityResultLauncher<String[]> locationPermLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), r -> performCheckIn());
+
     @Override
     protected FragmentDashboardBinding inflateBinding(
             @NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
@@ -74,7 +82,7 @@ public class DashboardFragment extends BaseFragment<FragmentDashboardBinding> {
         setupSections();
         setupSearch();
 
-        getBinding().buttonCheckIn.setOnClickListener(v -> performCheckIn());
+        getBinding().buttonCheckIn.setOnClickListener(v -> requestCheckIn());
         getBinding().buttonCheckOut.setOnClickListener(v -> performCheckOut());
         getBinding().buttonNotifications.setOnClickListener(v -> showSnackbar("Coming in a later phase"));
         getBinding().cardExpenses.setOnClickListener(v ->
@@ -227,6 +235,16 @@ public class DashboardFragment extends BaseFragment<FragmentDashboardBinding> {
         section.textSectionTitle.setText(titleRes);
         section.recyclerSectionItems.setLayoutManager(new LinearLayoutManager(requireContext()));
         section.recyclerSectionItems.setAdapter(adapter);
+    }
+
+    /** Asks for location permission (once) before checking in; check-in is never blocked by the answer. */
+    private void requestCheckIn() {
+        if (LocationUtils.hasPermission(requireContext())) {
+            performCheckIn();
+        } else {
+            locationPermLauncher.launch(new String[] {
+                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
+        }
     }
 
     private void performCheckIn() {

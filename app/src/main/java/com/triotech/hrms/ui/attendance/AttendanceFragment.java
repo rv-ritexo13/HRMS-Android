@@ -1,5 +1,6 @@
 package com.triotech.hrms.ui.attendance;
 
+import android.Manifest;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -21,6 +24,7 @@ import com.triotech.hrms.core.base.BaseFragment;
 import com.triotech.hrms.core.di.ServiceLocator;
 import com.triotech.hrms.core.di.ViewModelFactory;
 import com.triotech.hrms.core.util.DateUtils;
+import com.triotech.hrms.core.util.LocationUtils;
 import com.triotech.hrms.core.util.Resource;
 import com.triotech.hrms.data.model.AttendanceCorrectionRequest;
 import com.triotech.hrms.data.model.AttendanceHistoryEntry;
@@ -56,6 +60,11 @@ public class AttendanceFragment extends BaseFragment<FragmentAttendanceBinding>
     private final AttendanceHistoryAdapter historyAdapter = new AttendanceHistoryAdapter();
     private final CorrectionAdapter correctionAdapter = new CorrectionAdapter();
 
+    // Registered at construction (required for ActivityResult APIs). Whatever the
+    // permission result, check-in proceeds — location is recorded if granted, skipped if not.
+    private final ActivityResultLauncher<String[]> locationPermLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), r -> performCheckIn());
+
     @Nullable private int[] currentSelectedMonth;
     @Nullable private List<AttendanceHistoryEntry> currentHistoryEntries;
     @Nullable private Long pendingMissingCheckoutCheckIn;
@@ -75,7 +84,7 @@ public class AttendanceFragment extends BaseFragment<FragmentAttendanceBinding>
         setupWeekdayHeader();
         setupRecyclerViews();
 
-        getBinding().buttonCheckIn.setOnClickListener(v -> performCheckIn());
+        getBinding().buttonCheckIn.setOnClickListener(v -> requestCheckIn());
         getBinding().buttonCheckOut.setOnClickListener(v -> performCheckOut());
         getBinding().buttonPreviousMonth.setOnClickListener(v -> viewModel.goToPreviousMonth());
         getBinding().buttonNextMonth.setOnClickListener(v -> viewModel.goToNextMonth());
@@ -138,6 +147,16 @@ public class AttendanceFragment extends BaseFragment<FragmentAttendanceBinding>
     }
 
     // ===================== Today: check-in / check-out =====================
+
+    /** Asks for location permission (once) before checking in; check-in is never blocked by the answer. */
+    private void requestCheckIn() {
+        if (LocationUtils.hasPermission(requireContext())) {
+            performCheckIn();
+        } else {
+            locationPermLauncher.launch(new String[] {
+                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
+        }
+    }
 
     private void performCheckIn() {
         viewModel.checkIn().observe(getViewLifecycleOwner(), resource -> {
