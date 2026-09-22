@@ -31,6 +31,7 @@ public final class SessionManager {
     private static final String KEY_DEPARTMENT = "department";
     private static final String KEY_ROLE = "role";
     private static final String KEY_REMEMBERED_ID = "remembered_employee_id";
+    private static final String KEY_ACCESS_TOKEN = "supabase_access_token";
 
     @Nullable private static volatile AuthUser inMemorySession;
 
@@ -88,6 +89,18 @@ public final class SessionManager {
         return getSession(context) != null;
     }
 
+    /** Stores the Supabase access token (JWT) used to authorize PostgREST calls under RLS. */
+    public static void setAccessToken(@NonNull Context context, @Nullable String token) {
+        prefs(context).edit().putString(KEY_ACCESS_TOKEN, token).apply();
+    }
+
+    /** The current Supabase access token, or null if not signed in via Supabase. */
+    @Nullable
+    public static String getAccessToken(@NonNull Context context) {
+        String token = prefs(context).getString(KEY_ACCESS_TOKEN, null);
+        return (token == null || token.isEmpty()) ? null : token;
+    }
+
     public static void clearSession(@NonNull Context context) {
         inMemorySession = null;
         prefs(context).edit()
@@ -97,6 +110,7 @@ public final class SessionManager {
                 .remove(KEY_DESIGNATION)
                 .remove(KEY_DEPARTMENT)
                 .remove(KEY_ROLE)
+                .remove(KEY_ACCESS_TOKEN)
                 .apply();
     }
 
