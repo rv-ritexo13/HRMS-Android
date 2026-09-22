@@ -26,6 +26,18 @@ function statusKind(s) {
 const gross = (r) => Number(r.basic) + Number(r.hra) + Number(r.special_allowance) + Number(r.other_allowances);
 const net = (r) => gross(r) - (Number(r.provident_fund) + Number(r.professional_tax) + Number(r.other_deductions));
 
+// ---------- employee lookup: resolve a row's user_id to "Name (EMP ID)" ----------
+let employeeMap = {};
+async function loadEmployeeMap() {
+  const { data } = await sb.from("profiles").select("user_id,employee_id,full_name");
+  employeeMap = {};
+  (data || []).forEach((p) => { if (p.user_id) employeeMap[p.user_id] = p; });
+}
+function employeeDisplay(userId) {
+  const p = userId && employeeMap[userId];
+  return p ? `${p.full_name} (${p.employee_id})` : "—";
+}
+
 // ---------- entity definitions ----------
 const ENTITIES = {
   employees: {
@@ -55,6 +67,7 @@ const ENTITIES = {
   leave: {
     title: "Leave Requests", table: "leave_requests", pk: "id", order: { col: "applied_millis", asc: false },
     columns: [
+      { k: "user_id", label: "Employee", fmt: "employee" },
       { k: "leave_type", label: "Type" }, { k: "start_millis", label: "From", fmt: "date" },
       { k: "end_millis", label: "To", fmt: "date" }, { k: "days", label: "Days" },
       { k: "status", label: "Status", fmt: "status" }, { k: "reason", label: "Reason" },
@@ -66,6 +79,7 @@ const ENTITIES = {
   expenses: {
     title: "Expenses", table: "expenses", pk: "id", order: { col: "expense_date_millis", asc: false },
     columns: [
+      { k: "user_id", label: "Employee", fmt: "employee" },
       { k: "title", label: "Title" }, { k: "category", label: "Category" },
       { k: "amount", label: "Amount", fmt: "rupees" }, { k: "expense_date_millis", label: "Date", fmt: "date" },
       { k: "status", label: "Status", fmt: "status" },
@@ -77,11 +91,12 @@ const ENTITIES = {
   salary: {
     title: "Salary / Payslips", table: "payslips", pk: "month_key", order: { col: "month_key", asc: false },
     columns: [
-      { k: "month_key", label: "Month" }, { k: "employee_name", label: "Employee" },
+      { k: "employee_id", label: "Emp ID" }, { k: "employee_name", label: "Employee" },
+      { k: "month_key", label: "Month" },
       { k: "basic", label: "Basic", fmt: "rupees" }, { k: "hra", label: "HRA", fmt: "rupees" },
       { k: "__gross", label: "Gross", fmt: "rupees", calc: gross }, { k: "__net", label: "Net", fmt: "rupees", calc: net },
     ],
-    search: ["month_key", "employee_name"],
+    search: ["month_key", "employee_name", "employee_id"],
     canAdd: false, canDelete: false, canEdit: true,
     fields: [
       { k: "basic", label: "Basic", type: "number" }, { k: "hra", label: "HRA", type: "number" },
@@ -117,6 +132,7 @@ const ENTITIES = {
   notifications: {
     title: "Notifications", table: "notifications", pk: "id", order: { col: "sort_order", asc: true },
     columns: [
+      { k: "user_id", label: "Employee", fmt: "employee" },
       { k: "title", label: "Title" }, { k: "body", label: "Body" },
       { k: "time_label", label: "When" }, { k: "is_read", label: "Read", fmt: "bool" },
     ],
@@ -171,6 +187,7 @@ async function showApp() {
   $("appView").classList.remove("hidden");
   const { data } = await sb.auth.getUser();
   $("whoami").textContent = data?.user?.email || "";
+  await loadEmployeeMap();
   renderNav();
   select(currentKey);
 }
@@ -198,7 +215,7 @@ async function select(key) {
   await load();
 }
 
-$("refreshBtn").addEventListener("click", load);
+$("refreshBtn").addEventListener("click", async () => { await loadEmployeeMap(); load(); });
 $("search").addEventListener("input", () => renderTable());
 $("addBtn").addEventListener("click", () => openModal(null));
 
@@ -216,7 +233,11 @@ function renderTable() {
   const ent = ENTITIES[currentKey];
   const q = $("search").value.trim().toLowerCase();
   let rows = currentRows;
-  if (q && ent.search) rows = rows.filter((r) => ent.search.some((k) => String(r[k] ?? "").toLowerCase().includes(q)));
+  if (q && ent.search) {
+    rows = rows.filter((r) =>
+      ent.search.some((k) => String(r[k] ?? "").toLowerCase().includes(q))
+      || (r.user_id && employeeDisplay(r.user_id).toLowerCase().includes(q)));
+  }
 
   if (!rows.length) { $("tableWrap").innerHTML = '<div class="empty">No records.</div>'; return; }
 
@@ -239,6 +260,7 @@ function cell(r, c) {
   if (c.fmt === "date") return asDate(v);
   if (c.fmt === "bool") return v ? "Yes" : "No";
   if (c.fmt === "status") return `<span class="pill ${statusKind(v)}">${esc(v)}</span>`;
+  if (c.fmt === "employee") return esc(employeeDisplay(v));
   v = String(v ?? "");
   return esc(v.length > 60 ? v.slice(0, 57) + "…" : v);
 }
