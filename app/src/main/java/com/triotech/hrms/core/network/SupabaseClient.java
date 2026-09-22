@@ -88,6 +88,12 @@ public final class SupabaseClient {
         submit(() -> request("POST", BASE_URL + "/rest/v1/" + restPathAndQuery, jsonBody, accessToken), callback);
     }
 
+    /** PATCH JSON to PostgREST (update rows matched by the query filter). */
+    public void patch(@NonNull String restPathAndQuery, @NonNull String jsonBody,
+            @Nullable String accessToken, @NonNull Callback<ApiResponse> callback) {
+        submit(() -> request("PATCH", BASE_URL + "/rest/v1/" + restPathAndQuery, jsonBody, accessToken), callback);
+    }
+
     /** GoTrue email/password sign-in; the JSON body carries {@code access_token} on success. */
     public void authSignIn(@NonNull String email, @NonNull String password,
             @NonNull Callback<ApiResponse> callback) {
@@ -132,6 +138,10 @@ public final class SupabaseClient {
             conn.setRequestProperty("apikey", ANON_KEY);
             conn.setRequestProperty("Authorization", "Bearer " + (accessToken != null ? accessToken : ANON_KEY));
             conn.setRequestProperty("Accept", "application/json");
+            if ("POST".equals(method) || "PATCH".equals(method)) {
+                // Ask PostgREST to return the affected rows so callers can confirm the write.
+                conn.setRequestProperty("Prefer", "return=representation");
+            }
             if (jsonBody != null) {
                 conn.setDoOutput(true);
                 conn.setRequestProperty("Content-Type", "application/json");

@@ -24,6 +24,8 @@ import com.triotech.hrms.data.repository.MockPerformanceRepository;
 import com.triotech.hrms.data.repository.PerformanceRepository;
 import com.triotech.hrms.data.repository.ProfileRepository;
 import com.triotech.hrms.data.repository.SalaryRepository;
+import com.triotech.hrms.data.repository.SupabaseAuthRepository;
+import com.triotech.hrms.data.repository.SupabaseExpenseRepository;
 
 /**
  * Minimal hand-rolled service locator, kept from Phase 1.
@@ -53,7 +55,9 @@ public final class ServiceLocator {
 
     private ServiceLocator() {
         this.employeeRepository = new FakeEmployeeRepository();
-        this.authRepository = new DbAuthRepository(requireContext());
+        // Auth + Expenses are migrated to Supabase (real backend, RLS-scoped);
+        // the remaining repositories are still local while their migration is pending.
+        this.authRepository = new SupabaseAuthRepository(requireContext());
         this.attendanceRepository = new FakeAttendanceRepository(appContext);
         this.dashboardContentRepository = new FakeDashboardContentRepository();
         this.salaryRepository = new DbSalaryRepository(requireContext());
@@ -61,7 +65,7 @@ public final class ServiceLocator {
         this.documentRepository = new MockDocumentRepository();
         this.performanceRepository = new MockPerformanceRepository();
         this.leaveRepository = new DbLeaveRepository(requireContext());
-        this.expenseRepository = new DbExpenseRepository(requireContext());
+        this.expenseRepository = new SupabaseExpenseRepository(requireContext());
     }
 
     /**
