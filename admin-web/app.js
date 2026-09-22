@@ -11,6 +11,9 @@ const rupees = (n) =>
   "₹" + Number(n || 0).toLocaleString("en-IN");
 const asDate = (ms) =>
   ms ? new Date(Number(ms)).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }) : "—";
+const asTime = (ms) =>
+  ms ? new Date(Number(ms)).toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit" }) : "—";
+const gps = (r) => (r.check_in_lat != null ? `${Number(r.check_in_lat).toFixed(4)}, ${Number(r.check_in_lng).toFixed(4)}` : "—");
 const esc = (s) =>
   String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
@@ -38,6 +41,14 @@ function employeeDisplay(userId) {
   return p ? `${p.full_name} (${p.employee_id})` : "—";
 }
 
+// ---------- admin roster (who can use this dashboard) ----------
+let adminSet = new Set();
+let currentUserId = null;
+async function loadAdmins() {
+  const { data } = await sb.from("admins").select("user_id");
+  adminSet = new Set((data || []).map((a) => a.user_id));
+}
+
 // ---------- entity definitions ----------
 const ENTITIES = {
   employees: {
@@ -48,7 +59,7 @@ const ENTITIES = {
       { k: "work_email", label: "Email" }, { k: "phone", label: "Phone" },
     ],
     search: ["employee_id", "full_name", "department", "designation", "work_email"],
-    canAdd: true, canDelete: false, canEdit: true,
+    canAdd: true, canDelete: false, canEdit: true, adminToggle: true,
     // Creating an employee also creates a login account -> goes through the
     // create-employee Edge Function (service_role, server-side), not a table insert.
     createFn: "create-employee",
@@ -107,6 +118,33 @@ const ENTITIES = {
       { k: "other_deductions", label: "Other deductions", type: "number" },
     ],
   },
+  attendance: {
+    title: "Attendance", table: "attendance", pk: "id", order: { col: "date_key", asc: false },
+    columns: [
+      { k: "user_id", label: "Employee", fmt: "employee" },
+      { k: "date_key", label: "Date" },
+      { k: "status", label: "Status", fmt: "status" },
+      { k: "check_in_millis", label: "In", fmt: "time" },
+      { k: "check_out_millis", label: "Out", fmt: "time" },
+      { k: "__gps", label: "Check-in GPS", calc: gps },
+    ],
+    search: ["date_key", "status"],
+    canAdd: false, canDelete: false, canEdit: false,
+  },
+  corrections: {
+    title: "Corrections", table: "attendance_corrections", pk: "id", order: { col: "created_millis", asc: false },
+    columns: [
+      { k: "user_id", label: "Employee", fmt: "employee" },
+      { k: "date_key", label: "Date" },
+      { k: "actual_check_in_millis", label: "Actual in", fmt: "time" },
+      { k: "expected_check_in_millis", label: "Expected in", fmt: "time" },
+      { k: "reason", label: "Reason" },
+      { k: "status", label: "Status", fmt: "status" },
+    ],
+    search: ["date_key", "reason", "status"],
+    canAdd: false, canDelete: false, canEdit: false,
+    statusFlow: { Approve: "APPROVED", Reject: "REJECTED" },
+  },
   announcements: {
     title: "Announcements", table: "announcements", pk: "id", order: { col: "sort_order", asc: true },
     columns: [{ k: "title", label: "Title" }, { k: "body", label: "Body" }, { k: "time_label", label: "When" }],
@@ -144,7 +182,7 @@ const ENTITIES = {
     ],
   },
 };
-const ORDER = ["employees", "leave", "expenses", "salary", "announcements", "holidays", "notifications"];
+const ORDER = ["employees", "leave", "expenses", "salary", "attendance", "corrections", "announcements", "holidays", "notifications"];
 
 // ---------- state + elements ----------
 let currentKey = "employees";
@@ -186,8 +224,10 @@ async function showApp() {
   $("loginView").classList.add("hidden");
   $("appView").classList.remove("hidden");
   const { data } = await sb.auth.getUser();
+  currentUserId = data?.user?.id || null;
   $("whoami").textContent = data?.user?.email || "";
   await loadEmployeeMap();
+  await loadAdmins();
   renderNav();
   select(currentKey);
 }
@@ -258,6 +298,7 @@ function cell(r, c) {
   let v = c.calc ? c.calc(r) : r[c.k];
   if (c.fmt === "rupees") return rupees(v);
   if (c.fmt === "date") return asDate(v);
+  if (c.fmt === "time") return asTime(v);
   if (c.fmt === "bool") return v ? "Yes" : "No";
   if (c.fmt === "status") return `<span class="pill ${statusKind(v)}">${esc(v)}</span>`;
   if (c.fmt === "employee") return esc(employeeDisplay(v));
@@ -276,6 +317,16 @@ function actions(ent, r) {
   }
   if (ent.canEdit) out += `<button class="link" data-act="edit" data-id="${id}">Edit</button>`;
   if (ent.canDelete) out += `<button class="link" data-act="delete" data-id="${id}">Delete</button>`;
+  if (ent.adminToggle && r.user_id) {
+    const isAdm = adminSet.has(r.user_id);
+    if (isAdm) {
+      out += r.user_id === currentUserId
+        ? `<span class="pill success">Admin (you)</span>`
+        : `<button class="link" data-act="admintoggle" data-id="${id}">Remove admin</button>`;
+    } else {
+      out += `<button class="link" data-act="admintoggle" data-id="${id}">Make admin</button>`;
+    }
+  }
   return `<div class="row-actions">${out}</div>`;
 }
 
@@ -283,6 +334,21 @@ async function handleAction(act, id, val) {
   const ent = ENTITIES[currentKey];
   const row = currentRows.find((r) => String(r[ent.pk]) === String(id));
   if (act === "edit") return openModal(row);
+  if (act === "admintoggle") {
+    const uid = row && row.user_id;
+    if (!uid) return;
+    let error;
+    if (adminSet.has(uid)) {
+      if (uid === currentUserId) { alert("You can't remove your own admin access."); return; }
+      if (!confirm(`Remove admin access for ${employeeDisplay(uid)}?`)) return;
+      ({ error } = await sb.from("admins").delete().eq("user_id", uid));
+    } else {
+      if (!confirm(`Give ${employeeDisplay(uid)} admin access to this dashboard?`)) return;
+      ({ error } = await sb.from("admins").insert({ user_id: uid }));
+    }
+    if (!error) await loadAdmins();
+    return finish(error, "Admin access updated");
+  }
   if (act === "delete") {
     if (!confirm("Delete this record?")) return;
     const { error } = await sb.from(ent.table).delete().eq(ent.pk, id);
