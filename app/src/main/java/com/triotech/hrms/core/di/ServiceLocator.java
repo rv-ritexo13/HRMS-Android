@@ -26,8 +26,10 @@ import com.triotech.hrms.data.repository.ProfileRepository;
 import com.triotech.hrms.data.repository.SalaryRepository;
 import com.triotech.hrms.data.repository.SupabaseAuthRepository;
 import com.triotech.hrms.data.repository.SupabaseDashboardContentRepository;
+import com.triotech.hrms.data.repository.SupabaseDocumentRepository;
 import com.triotech.hrms.data.repository.SupabaseExpenseRepository;
 import com.triotech.hrms.data.repository.SupabaseLeaveRepository;
+import com.triotech.hrms.data.repository.SupabasePerformanceRepository;
 import com.triotech.hrms.data.repository.SupabaseProfileRepository;
 import com.triotech.hrms.data.repository.SupabaseSalaryRepository;
 
@@ -66,8 +68,8 @@ public final class ServiceLocator {
         this.dashboardContentRepository = new SupabaseDashboardContentRepository();
         this.salaryRepository = new SupabaseSalaryRepository();
         this.profileRepository = new SupabaseProfileRepository();
-        this.documentRepository = new MockDocumentRepository();
-        this.performanceRepository = new MockPerformanceRepository();
+        this.documentRepository = new SupabaseDocumentRepository();
+        this.performanceRepository = new SupabasePerformanceRepository();
         this.leaveRepository = new SupabaseLeaveRepository();
         this.expenseRepository = new SupabaseExpenseRepository();
     }
