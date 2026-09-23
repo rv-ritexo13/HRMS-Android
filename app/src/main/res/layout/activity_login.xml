@@ -21,22 +21,12 @@
             android:minHeight="@dimen/space_xxl" />
 
         <!-- Branding -->
-        <com.google.android.material.card.MaterialCardView
+        <ImageView
             android:layout_width="@dimen/avatar_size_lg"
             android:layout_height="@dimen/avatar_size_lg"
             android:layout_marginBottom="@dimen/space_lg"
-            app:cardBackgroundColor="?attr/colorPrimary"
-            app:cardCornerRadius="@dimen/radius_lg"
-            app:cardElevation="@dimen/elevation_none">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="H"
-                android:textAppearance="@style/TextAppearance.HRMS.HeadlineLarge"
-                android:textColor="?attr/colorOnPrimary" />
-        </com.google.android.material.card.MaterialCardView>
+            android:src="@drawable/worknexa_mark"
+            android:importantForAccessibility="no" />
 
         <TextView
             android:layout_width="wrap_content"

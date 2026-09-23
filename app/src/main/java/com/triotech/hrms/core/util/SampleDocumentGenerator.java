@@ -33,7 +33,7 @@ public final class SampleDocumentGenerator {
 
     private static final String[] BODY_LINES = {
             "This is a sample document generated for demonstration purposes.",
-            "It stands in for the employee's real document in the HRMS demo build.",
+            "It stands in for the employee's real document in the Worknexa demo build.",
             "",
             "Document details, formatting and official content will be provided by",
             "the HR document service in a later phase. The layout below mirrors the",
