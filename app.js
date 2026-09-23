@@ -51,6 +51,7 @@ async function loadAdmins() {
 
 // ---------- entity definitions ----------
 const ENTITIES = {
+  dashboard: { title: "Dashboard", dashboard: true },
   employees: {
     title: "Employees", table: "profiles", pk: "employee_id", order: { col: "full_name", asc: true },
     columns: [
@@ -182,10 +183,10 @@ const ENTITIES = {
     ],
   },
 };
-const ORDER = ["employees", "leave", "expenses", "salary", "attendance", "corrections", "announcements", "holidays", "notifications"];
+const ORDER = ["dashboard", "employees", "leave", "expenses", "salary", "attendance", "corrections", "announcements", "holidays", "notifications"];
 
 // ---------- state + elements ----------
-let currentKey = "employees";
+let currentKey = "dashboard";
 let currentRows = [];
 const $ = (id) => document.getElementById(id);
 
@@ -251,17 +252,25 @@ async function select(key) {
   const ent = ENTITIES[key];
   $("pageTitle").textContent = ent.title;
   $("search").value = "";
+  $("search").classList.toggle("hidden", !!ent.dashboard);
   $("addBtn").classList.toggle("hidden", !ent.canAdd);
+  if (ent.dashboard) { await renderDashboard(); return; }
   await load();
 }
 
-$("refreshBtn").addEventListener("click", async () => { await loadEmployeeMap(); load(); });
+$("refreshBtn").addEventListener("click", async () => {
+  await loadEmployeeMap();
+  await loadAdmins();
+  if (ENTITIES[currentKey].dashboard) return renderDashboard();
+  load();
+});
 $("search").addEventListener("input", () => renderTable());
 $("addBtn").addEventListener("click", () => openModal(null));
 
 // ---------- data ----------
 async function load() {
   const ent = ENTITIES[currentKey];
+  $("tableWrap").className = "table-wrap";
   $("tableWrap").innerHTML = '<div class="empty">Loading…</div>';
   const { data, error } = await sb.from(ent.table).select("*").order(ent.order.col, { ascending: ent.order.asc });
   if (error) { $("tableWrap").innerHTML = `<div class="empty">Error: ${esc(error.message)}</div>`; return; }
@@ -292,6 +301,59 @@ function renderTable() {
   $("tableWrap").querySelectorAll("[data-act]").forEach((btn) => {
     btn.onclick = () => handleAction(btn.dataset.act, btn.dataset.id, btn.dataset.val);
   });
+}
+
+// ---------- dashboard ----------
+const PENDING = ["PENDING", "SUBMITTED"];
+const PRESENT_STATES = ["PRESENT", "LATE", "WORK_FROM_HOME", "HALF_DAY"];
+
+async function countRows(table, apply) {
+  let q = sb.from(table).select("*", { count: "exact", head: true });
+  if (apply) q = apply(q);
+  const { count, error } = await q;
+  return error ? null : (count || 0);
+}
+const fmtNum = (n) => (n == null ? "—" : Number(n).toLocaleString("en-IN"));
+
+async function renderDashboard() {
+  $("tableWrap").innerHTML = '<div class="empty">Loading…</div>';
+  const now = new Date();
+  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  const endOfToday = startOfToday + 86400000 - 1;
+  const pad = (x) => String(x).padStart(2, "0");
+  const todayKey = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+  const todayLabel = now.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+
+  const [total, onLeave, present, pLeave, pExpense, pCorrection] = await Promise.all([
+    countRows("profiles"),
+    countRows("leave_requests", (q) => q.eq("status", "APPROVED").lte("start_millis", endOfToday).gte("end_millis", startOfToday)),
+    countRows("attendance", (q) => q.eq("date_key", todayKey).in("status", PRESENT_STATES)),
+    countRows("leave_requests", (q) => q.in("status", PENDING)),
+    countRows("expenses", (q) => q.in("status", PENDING)),
+    countRows("attendance_corrections", (q) => q.in("status", PENDING)),
+  ]);
+
+  const cards = [
+    { label: "Total members", value: total, sub: "Registered employees", accent: "info" },
+    { label: "Admins", value: adminSet.size, sub: "Have dashboard access", accent: "info" },
+    { label: "On leave today", value: onLeave, sub: todayLabel, accent: "warning" },
+    { label: "Present today", value: present, sub: todayLabel, accent: "success" },
+    { label: "Pending leave", value: pLeave, sub: "Awaiting approval", accent: "warning", go: "leave" },
+    { label: "Pending expenses", value: pExpense, sub: "Awaiting approval", accent: "warning", go: "expenses" },
+    { label: "Pending corrections", value: pCorrection, sub: "Awaiting approval", accent: "warning", go: "corrections" },
+  ];
+
+  $("tableWrap").className = "";
+  $("tableWrap").innerHTML =
+    `<div class="stat-grid">` +
+    cards.map((c) =>
+      `<div class="stat-card ${c.accent}${c.go ? " clickable" : ""}"${c.go ? ` data-go="${c.go}"` : ""}>
+         <div class="stat-value">${fmtNum(c.value)}</div>
+         <div class="stat-label">${esc(c.label)}</div>
+         <div class="stat-sub">${esc(c.sub)}</div>
+       </div>`).join("") +
+    `</div>`;
+  $("tableWrap").querySelectorAll("[data-go]").forEach((el) => { el.onclick = () => select(el.dataset.go); });
 }
 
 function cell(r, c) {
