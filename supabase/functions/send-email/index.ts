@@ -62,8 +62,9 @@ Deno.serve(async (req) => {
       },
       body: JSON.stringify({
         // NOTE: use a sender on a domain verified in Resend, else delivery fails.
-        from: Deno.env.get("MAIL_FROM") ?? "WorkNexa <noreply@yourdomain.com>",
+        from: Deno.env.get("MAIL_FROM") ?? "WorkNexa <onboarding@resend.dev>",
         to: email,
+        reply_to: Deno.env.get("MAIL_REPLY_TO") ?? "vsgowda007@gmail.com",
         subject: title,
         html,
       }),

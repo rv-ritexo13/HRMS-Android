@@ -6,12 +6,19 @@
 --
 -- Idempotent: safe to re-run. Run this in the Supabase SQL editor once.
 --
--- PREREQUISITES (run once, out of band — secrets are NOT committed):
---   create extension if not exists pg_net;
---   -- shared secret the Edge Function checks (must equal the NOTIFY_SECRET
---   -- function env var); set at the DB level so current_setting() can read it:
---   alter database postgres set app.notify_secret = '<same-random-string>';
---   -- reconnect after the alter so the new setting is loaded.
+-- SETUP:
+--   * Deploy the `send-email` Edge Function first, with "Verify JWT" OFF
+--     (the DB calls it with a shared-secret header, not a user JWT).
+--   * Set these Edge Function secrets: RESEND_API_KEY, MAIL_FROM,
+--     and NOTIFY_SECRET.
+--   * Replace <NOTIFY_SECRET> below with the SAME value as the NOTIFY_SECRET
+--     function secret, then run this script.
+--
+-- Why the secret is inlined here (not a DB setting): Supabase's hosted SQL
+-- role can't run `alter database ... set` (ERROR 42501). The secret lives
+-- only inside the database and is sent only over HTTPS to our own function,
+-- so inlining it in this security-definer function is safe. Do NOT commit
+-- the real value — keep the <NOTIFY_SECRET> placeholder in version control.
 -- =====================================================================
 
 create extension if not exists pg_net;
@@ -54,7 +61,7 @@ begin
     url     := 'https://fqkofbenaczxgqkjrrvz.functions.supabase.co/send-email',
     headers := jsonb_build_object(
                  'Content-Type',    'application/json',
-                 'x-notify-secret', current_setting('app.notify_secret', true)
+                 'x-notify-secret', '<NOTIFY_SECRET>'
                ),
     body    := jsonb_build_object(
                  'user_id', new.user_id,
